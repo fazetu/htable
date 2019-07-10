@@ -64,7 +64,7 @@ htable$set("public", "View", function() {
   rstudioapi::viewer(tmp_html)
 })
 
-htable$set("public", "writeLines", function(con = sdout(), sep = "\n", useBytes = FALSE) {
+htable$set("public", "writeLines", function(con = stdout(), sep = "\n", useBytes = FALSE) {
   writeLines(self$render(), con = con, sep = sep, useBytes = useBytes)
   invisible(self)
 })

@@ -35,7 +35,7 @@ htable$set("public", "col_clear_style", function(col = NULL, include_header = FA
 
 htable$set("public", "col_width", function(col = NULL, width = NULL) {
   if (is.null(col) | is.null(width)) return(invisible(self))
-  stopifnot(is.numeric(width))
+  stopifnot(is.character(width))
   self$col_add_style(col = col, style = sprintf("width:%s;", width), include_header = TRUE)
   invisible(self)
 })
