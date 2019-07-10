@@ -108,6 +108,11 @@ HTable$set("public", "render", function() {
   tsc("table", self$table_style, paste0(thead, tbody, collapse = ""))
 })
 
+#' Put an HTable into an RMarkdown Document
+#' 
+#' @name HTable_Rmd
+HTable$set("public", "Rmd", function() cat(self$render()))
+
 #' View the HTable in the RStudio Viewer tab
 #' 
 #' @name HTable_View
