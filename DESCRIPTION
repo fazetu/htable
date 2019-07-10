@@ -13,6 +13,8 @@ RoxygenNote: 6.1.1
 Collate: 
     'utils.R'
     'htable.R'
+    'cell_styles.R'
     'col_styles.R'
     'import.R'
     'row_styles.R'
+    'table_styles.R'
