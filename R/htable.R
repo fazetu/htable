@@ -47,7 +47,7 @@ htable$set("public", "render", function() {
   tds <- lapply(2:nrow(self$contents), function(i) tsc("td", self$styles[i, ], self$contents[i, ]))
   
   tr_ths <- tsc("tr", self$tr_styles[1], paste0(ths, collapse = ""))
-  tr_tds <- vapply(seq_along(tds), function(i) tsc("tr", self$tr_styles[i], paste0(tds[[i]], collapse = "")), character(1))
+  tr_tds <- vapply(seq_along(tds), function(i) tsc("tr", self$tr_styles[i + 1], paste0(tds[[i]], collapse = "")), character(1))
   
   thead <- tsc("thead", self$thead_style, tr_ths)
   tbody <- tsc("tbody", self$tbody_style, paste0(tr_tds, collapse = ""))

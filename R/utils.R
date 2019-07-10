@@ -12,12 +12,12 @@ add_style <- function(curr_styles, new_styles) {
     paste0(stl, ";")
   })
   
-  final_styles <- mapply(function(c, n) {
-    if (length(c) == 0) return(paste0(n, collapse = ""))
-    c_names <- gsub("(.*):.*;", "\\1", c)
-    n_names <- gsub("(.*):.*;", "\\1", n)
-    cf <- c[c_names != n_names] # filter out name if we are adding that style
-    unique(c(cf, n))
+  final_styles <- mapply(function(cs, ns) {
+    if (length(cs) == 0) return(paste0(ns, collapse = ""))
+    c_names <- gsub("(.*):.*;", "\\1", cs)
+    n_names <- gsub("(.*):.*;", "\\1", ns)
+    cf <- cs[!c_names %in% n_names] # filter out name if we are adding that style
+    unique(c(cf, ns))
   }, curr_styles_splt, new_styles_splt, SIMPLIFY = FALSE)
   
   vapply(final_styles, function(s) paste0(s, collapse = ""), character(1))

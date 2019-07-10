@@ -67,6 +67,7 @@ htable$set("public", "tbody_style_clear", function() {
 
 htable$set("public", "tr_styles_all_add", function(style = NULL) {
   if (is.null(style)) return(invisible(self))
+  if (length(style) == 1) style <- rep(style, length(self$tr_styles))
   stopifnot(is.character(style), length(style) == length(self$tr_styles))
   
   self$tr_styles <- add_style(self$tr_styles, style)
@@ -75,6 +76,7 @@ htable$set("public", "tr_styles_all_add", function(style = NULL) {
 
 htable$set("public", "tr_styles_all_replace", function(style = NULL) {
   if (is.null(style)) return(invisible(self))
+  if (length(style) == 1) style <- rep(style, length(self$tr_styles))
   stopifnot(is.character(style), length(style) == length(self$tr_styles))
   
   self$tr_styles <- style
@@ -83,6 +85,34 @@ htable$set("public", "tr_styles_all_replace", function(style = NULL) {
 
 htable$set("public", "tr_styles_all_clear", function() {
   self$tr_styles_all_replace(rep("", length(self$tr_styles)))
+  invisible(self)
+})
+
+htable$set("public", "tr_styles_which_add", function(which = NULL, style = NULL) {
+  if (is.null(which) | is.null(style)) return(invisible(self))
+  stopifnot(is.numeric(which))
+  stopifnot(is.character(style))
+  stopifnot(length(which) == length(style))
+  
+  self$tr_styles[which] <- add_style(self$tr_styles[which], style)
+  invisible(self)
+})
+
+htable$set("public", "tr_styles_which_replace", function(which = NULL, style = NULL) {
+  if (is.null(which) | is.null(style)) return(invisible(self))
+  stopifnot(is.numeric(which))
+  stopifnot(is.character(style))
+  stopifnot(length(which) == length(style))
+  
+  self$tr_styles[which] <- style
+  invisible(self)
+})
+
+htable$set("public", "tr_styles_which_clear", function(which = NULL) {
+  if (is.null(which)) return(invisible(self))
+  stopifnot(is.numeric(which))
+  
+  self$tr_styles_which_replace(which = which, style = "")
   invisible(self)
 })
 
@@ -100,7 +130,7 @@ htable$set("public", "add_all_styles", function(style = NULL) {
 
   self$table_style <- add_style(self$table_style, style)
   self$thead_style <- add_style(self$thead_style, style)
-  self$tbody_styles <- add_style(self$tbody_styles, style)
+  self$tbody_style <- add_style(self$tbody_style, style)
   self$tr_styles <- add_style(self$tr_styles, rep(style, length(self$tr_styles)))
   self$add_styles(style = style)
   invisible(self)
@@ -112,7 +142,7 @@ htable$set("public", "replace_styles", function(style = NULL) {
   
   self$table_style <- style
   self$thead_style <- style
-  self$tbody_styles <- style
+  self$tbody_style <- style
   self$tr_styles <- rep(style, length(self$tr_styles))
   self$styles <- matrix(style, nrow = nrow(self$styles), ncol = ncol(self$styles))
   invisible(self)
