@@ -2,7 +2,17 @@
 NULL
 
 
-htable$set("public", "col_add_style", function(col = NULL, style = NULL, include_header = FALSE) {
+#' Add a style to a column
+#' 
+#' Add a style to each <td> and, optionally, <th> tag in a column. Changes the
+#' \code{styles} field.
+#' 
+#' @name HTable_col_add_style
+#' @param col Numeric vector of which columns to target.
+#' @param style Character vector (length 1) of style(s).
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_add_style", function(col = NULL, style = NULL, include_header = FALSE) {
   if (is.null(col) | is.null(style)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(is.character(style), length(style) == 1)
@@ -14,7 +24,17 @@ htable$set("public", "col_add_style", function(col = NULL, style = NULL, include
   invisible(self)
 })
 
-htable$set("public", "col_replace_style", function(col = NULL, style = NULL, include_header = FALSE) {
+#' Replace the style in a column
+#' 
+#' Replace the style of each <td> and, optionally, <th> tag in a column. Changes
+#' the \code{styles} field.
+#' 
+#' @name HTable_col_replace_style
+#' @param col Numeric vector of which columns to target.
+#' @param style Character vector (length 1) of style(s).
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_replace_style", function(col = NULL, style = NULL, include_header = FALSE) {
   if (is.null(col) | is.null(style)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(is.character(style), length(style) == 1)
@@ -26,47 +46,112 @@ htable$set("public", "col_replace_style", function(col = NULL, style = NULL, inc
   invisible(self)
 })
 
-htable$set("public", "col_clear_style", function(col = NULL, include_header = FALSE) {
+#' Clear the style in a column
+#' 
+#' Clear the style of each <td> and, optionally, <th> tag in a column. Changes
+#' the \code{styles} field.
+#' 
+#' @name HTable_col_clear_style
+#' @param col Numeric vector of which columns to target.
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_clear_style", function(col = NULL, include_header = FALSE) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   self$col_replace_style(col = col, style = "", include_header = include_header)
   invisible(self)
 })
 
-htable$set("public", "col_width", function(col = NULL, width = NULL) {
+#' Add a width style to a column
+#' 
+#' Add a width style to each <td> and <th> tag in a column. Changes the
+#' \code{styles} field.
+#' 
+#' @name HTable_col_width
+#' @param col Numeric vector of which columns to target.
+#' @param width Character vector (length 1) of the width to use. Usually a "px"
+#'   or "%".
+HTable$set("public", "col_width", function(col = NULL, width = NULL) {
   if (is.null(col) | is.null(width)) return(invisible(self))
-  stopifnot(is.character(width))
+  stopifnot(is.character(width), length(width) == 1)
   self$col_add_style(col = col, style = sprintf("width:%s;", width), include_header = TRUE)
   invisible(self)
 })
 
-htable$set("public", "col_bold", function(col = NULL, include_header = FALSE) {
+#' Add a bold style to a column
+#' 
+#' Add a bold style to each <td> and, optionally, <th> tag in a column. Changes
+#' the \code{styles} field.
+#' 
+#' @name HTable_col_bold
+#' @param col Numeric vector of which columns to target.
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_bold", function(col = NULL, include_header = FALSE) {
   if (is.null(col)) return(invisible(self))
   self$col_add_style(col = col, style = "font-weight:bold;", include_header = include_header)
   invisible(self)
 })
 
-htable$set("public", "col_italic", function(col = NULL, include_header = FALSE) {
+#' Add an italic style to a column
+#' 
+#' Add an italic style to each <td> and, optionally, <th> tag in a column.
+#' Changes the \code{styles} field.
+#' 
+#' @name HTable_col_italic
+#' @param col Numeric vector of which columns to target.
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_italic", function(col = NULL, include_header = FALSE) {
   if (is.null(col)) return(invisible(self))
   self$col_add_style(col = col, style = "font-style:italic;", include_header = include_header)
   invisible(self)
 })
 
-htable$set("public", "col_bg_color", function(col = NULL, color = NULL, include_header = FALSE) {
+#' Add a background color style to a column
+#' 
+#' Add a background color style to each <td> and, optionally, <th> tag in a
+#' column. Changes the \code{styles} field.
+#' 
+#' @name HTable_col_bg_color
+#' @param col Numeric vector of which columns to target.
+#' @param color Character vector (length 1) of an HTML color name, hex color
+#'   code, or rgb color of the form rgb(x, y, z).
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_bg_color", function(col = NULL, color = NULL, include_header = FALSE) {
   if (is.null(col) | is.null(color)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   self$col_add_style(col = col, style = sprintf("background-color:%s;", color), include_header = include_header)
   invisible(self)
 })
 
-htable$set("public", "col_color", function(col = NULL, color = NULL, include_header = FALSE) {
+#' Add a text color style to a column
+#' 
+#' Add a text color style to each <td> and, optionally, <th> tag in a column.
+#' Changes the \code{styles} field.
+#' 
+#' @name HTable_col_color
+#' @param col Numeric vector of which columns to target.
+#' @param color Character vector (length 1) of an HTML color name, hex color
+#'   code, or rgb color of the form rgb(x, y, z).
+#' @param include_header Boolean if the <th> tags in the columns should also be
+#'   styled.
+HTable$set("public", "col_color", function(col = NULL, color = NULL, include_header = FALSE) {
   if (is.null(col) | is.null(color)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   self$col_add_style(col = col, style = sprintf("color:%s;", color), include_header = include_header)
   invisible(self)
 })
 
-htable$set("public", "col_pct_fmt", function(col = NULL) {
+#' Edit a column to have a percent format
+#' 
+#' Change numeric column(s) to have a percent formatting. Changes the
+#' \code{contents} field.
+#' 
+#' @name HTable_col_pct_fmt
+#' @param col Numeric vector of which columns to target.
+HTable$set("public", "col_pct_fmt", function(col = NULL) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(all(sapply(self$data[, col], is.numeric)))
@@ -79,7 +164,14 @@ htable$set("public", "col_pct_fmt", function(col = NULL) {
   invisible(self)
 })
 
-htable$set("public", "col_comma_fmt", function(col = NULL) {
+#' Edit a column to have a comma format
+#' 
+#' Change numeric column(s) to have a comma formatting. Changes the
+#' \code{contents} field.
+#' 
+#' @name HTable_col_comma_fmt
+#' @param col Numeric vector of which columns to target.
+HTable$set("public", "col_comma_fmt", function(col = NULL) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(all(sapply(self$data[, col], is.numeric)))
@@ -92,7 +184,14 @@ htable$set("public", "col_comma_fmt", function(col = NULL) {
   invisible(self)
 })
 
-htable$set("public", "col_dollar_fmt", function(col = NULL) {
+#' Edit a column to have a dollar format
+#' 
+#' Change numeric column(s) to have a dollar formatting. Changes the
+#' \code{contents} field.
+#' 
+#' @name HTable_col_dollar_fmt
+#' @param col Numeric vector of which columns to target.
+HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(all(sapply(self$data[, col], is.numeric)))
@@ -105,11 +204,35 @@ htable$set("public", "col_dollar_fmt", function(col = NULL) {
   invisible(self)
 })
 
-htable$set("public", "col_color_scale", function(col = NULL, exclude_rows = NULL) {
+#' Apply a color scale gradient to columns
+#'  
+#' Change numeric column(s) to have a background color gradient based on the
+#' range of values in the column.
+#' 
+#' @name HTable_col_color_scale
+#' @param col Numeric vector of which columns to target.
+#' @param exclude_rows Numeric vector of which rows to exclude from calculation
+#'   and coloring.
+HTable$set("public", "col_color_scale", function(col = NULL, exclude_rows = NULL) {
+  cat("TODO: col_color_scale not implemented yet\n")
   invisible(self)
 })
 
-htable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", exclude_rows = NULL, na.rm = TRUE) {
+#' Apply a data bar element to columns
+#' 
+#' Change numeric column(s) to have a colored data bar element in each cell. The
+#' length of the bar is based on the range of values in the column. Changes the
+#' \code{contents} field.
+#' 
+#' @name HTable_col_data_bar
+#' @param col Numeric vector of which columns to target.
+#' @param color Character vector (length 1) of an HTML color name, hex color
+#'   code, or rgb color of the form rgb(x, y, z). Used to color the data bars.
+#' @param exclude_rows Numeric vector of which rows to exclude from calculation
+#'   and styling.
+#' @param na.rm Boolean if \code{NA}'s should be removed when scaling the data
+#'   bars.
+HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", exclude_rows = NULL, na.rm = TRUE) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(is.character(color), length(color) == 1)
