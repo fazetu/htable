@@ -56,6 +56,14 @@ htable$set("public", "render", function() {
   tsc("table", self$table_style, paste0(thead, tbody, collapse = ""))
 })
 
+htable$set("public", "View", function() {
+  tmp_dir <- tempfile()
+  dir.create(tmp_dir)
+  tmp_html <- file.path(tmp_dir, "temp.html")
+  writeLines(c("<html><body>", self$render(), "</body></html>"), tmp_html)
+  rstudioapi::viewer(tmp_html)
+})
+
 htable$set("public", "writeLines", function(con = sdout(), sep = "\n", useBytes = FALSE) {
   writeLines(self$render(), con = con, sep = sep, useBytes = useBytes)
   invisible(self)
