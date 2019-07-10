@@ -120,7 +120,7 @@ htable$set("public", "add_styles", function(style = NULL) {
   if (is.null(style)) return(invisible(self))
   stopifnot(is.character(style), length(style) == 1)
 
-  hd$styles <- matrix(sapply(hd$styles, function(col) add_style(col, style)), nrow = nrow(hd$styles), ncol = ncol(hd$styles))
+  self$styles <- matrix(sapply(self$styles, function(col) add_style(col, style)), nrow = nrow(self$styles), ncol = ncol(self$styles))
   invisible(self)
 })
 
