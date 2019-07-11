@@ -25,34 +25,34 @@ add_style <- function(curr_styles, new_styles) {
 
 nested_depth <- function(html) lengths(strsplit(html, "</")) - 1
 
-# for working with span tags in self$contents
+# for working with tags in self$contents
 has_style <- function(html) {
   open_tag <- gsub("<(.*)>.*</.*>", "\\1", html)
   grepl("style", open_tag)
 }
 
-span_add_style <- function(html, style) { # assumes all html does not have style attribute already
+tag_add_style <- function(html, style) { # assumes all html does not have style attribute already
   tag_name <- gsub("<(.*)>.*</.*>", "\\1", html)
   content <- gsub("<.*>(.*)</.*>", "\\1", html)
   sprintf("<%s style='%s'>%s</%s>", tag_name, style, content, tag_name)
 }
 
-span_insert_style <- function(html, style) { # assumes all html have style attribute alread
+tag_insert_style <- function(html, style) { # assumes all html have style attribute already
   tag_name <- gsub("<(.*) style='.*'>.*</.*>", "\\1", html)
   curr_style <- gsub("<.* style='(.*)'>.*</.*>", "\\1", html)
   content <- gsub("<.* style='.*'>(.*)</.*>", "\\1", html)
   sprintf("<%s style='%s'>%s</%s>", tag_name, add_style(curr_style, style), content, tag_name)
 }
 
-span_edit_style <- function(html, style) {
+tag_edit_style <- function(html, style) {
   new_html <- html
   have_style <- has_style(html)
-  new_html[!have_style] <- span_add_style(html[!have_style], style[!have_style])
-  new_html[have_style] <- span_insert_style(html[have_style], style[have_style])
+  new_html[!have_style] <- tag_add_style(html[!have_style], style[!have_style])
+  new_html[have_style] <- tag_insert_style(html[have_style], style[have_style])
   new_html
 }
 
-span_replace_content <- function(html, content) {
+tag_replace_content <- function(html, content) {
   if (any(nested_depth(html) != 1)) stop("HTML is nested. Something weird happened.")
   open_tag <- gsub("(<.*>).*</.*>", "\\1", html)
   close_tag <- gsub("<.*>.*(</.*>)", "\\1", html)

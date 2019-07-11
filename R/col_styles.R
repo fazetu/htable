@@ -69,8 +69,8 @@ HTable$set("public", "col_clear_style", function(col = NULL, include_header = FA
 #' 
 #' @name HTable_col_width
 #' @param col Numeric vector of which columns to target.
-#' @param width Character vector (length 1) of the width to use. Usually a "px"
-#'   or "%".
+#' @param width Character vector (length 1) of the width to use. Usually of the
+#'   format "Npx" or "N\%".
 HTable$set("public", "col_width", function(col = NULL, width = NULL) {
   if (is.null(col) | is.null(width)) return(invisible(self))
   stopifnot(is.character(width), length(width) == 1)
@@ -158,7 +158,7 @@ HTable$set("public", "col_pct_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- span_replace_content(self$contents[-1, c], sprintf("%.2f%%", x * 100))
+    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], sprintf("%.2f%%", x * 100))
   }
   
   invisible(self)
@@ -178,7 +178,7 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- span_replace_content(self$contents[-1, c], format(x, big.mark = ","))
+    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], format(x, big.mark = ","))
   }
   
   invisible(self)
@@ -198,7 +198,7 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- span_replace_content(self$contents[-1, c], paste0("$", format(x, big.mark = ",")))
+    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], paste0("$", format(x, big.mark = ",")))
   }
   
   invisible(self)
@@ -213,8 +213,33 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
 #' @param col Numeric vector of which columns to target.
 #' @param exclude_rows Numeric vector of which rows to exclude from calculation
 #'   and coloring.
-HTable$set("public", "col_color_scale", function(col = NULL, exclude_rows = NULL) {
-  cat("TODO: col_color_scale not implemented yet\n")
+HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B", "#FFEB84", "#F8696B"), exclude_rows = NULL, na.rm = TRUE) {
+  #cat("TODO: col_color_scale not implemented yet\n")
+  if (is.null(col)) return(invisible(self))
+  stopifnot(is.numeric(col))
+  stopifnot(is.character(color))
+  stopifnot(all(sapply(self$data[, col], is.numeric)))
+  stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
+  
+  pal <- colorRamp(color)
+  
+  if (is.null(exclude_rows)) {
+    data_exclude_rows <- -(1:nrow(self$data))
+    contents_exclude_rows <- 1
+  } else {
+    data_exclude_rows <- exclude_rows
+    contents_exclude_rows <- c(1, exclude_rows + 1)
+  }
+  
+  for (c in col) {
+    x <- self$data[-data_exclude_rows, c]
+    rx <- range(x, na.rm = TRUE) # range x
+    sx <- (x - rx[1]) / diff(rx) # scaled x
+    # undo any data bars styling if this happens after
+    color_scale_styles <- sprintf("border-radius:0;padding-right:0;background-color:%s;width:100%%;", rgb(pal(sx), max = 255))
+    self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], color_scale_styles)
+  }
+  
   invisible(self)
 })
 
@@ -250,9 +275,10 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
     width <- (x / max(abs(x), na.rm = na.rm)) * 100
-    bar_styles <- sprintf("display:inline-block;direction:ltr;border-radius:4px;padding-right:2px;background-color:%s;width:%.2f%%;",
+    # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
+    bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:4px;padding-right:2px;background-color:%s;width:%.2f%%;",
                           color, width)
-    self$contents[-contents_exclude_rows, c] <- span_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
+    self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
   }
 
   invisible(self)

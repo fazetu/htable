@@ -257,10 +257,6 @@ HTable$set("public", "replace_styles", function(style = NULL) {
   if (is.null(style)) return(invisible(self))
   stopifnot(is.character(style), length(style) == 1)
   
-  self$table_style <- style
-  self$thead_style <- style
-  self$tbody_style <- style
-  self$tr_styles <- rep(style, length(self$tr_styles))
   self$styles <- matrix(style, nrow = nrow(self$styles), ncol = ncol(self$styles))
   invisible(self)
 })
@@ -306,5 +302,22 @@ HTable$set("public", "clear_styles", function() {
 #' @name HTable_clear_all_styles
 HTable$set("public", "clear_all_styles", function() {
   self$replace_all_styles(style = "")
+  invisible(self)
+})
+
+#' Reset the contents of every <th> and <td> tag
+#' 
+#' Reset the contents of every entry in the \code{contents} field. This is a
+#' character matrix of contents that represents the contents of each <th> and
+#' <td> tag.
+#' 
+#' @name HTable_reset_contents
+HTable$set("public", "reset_contents", function() {
+  x <- self$data
+  contents <- rbind(
+    tsc("div", "", colnames(x)),
+    do.call("cbind", lapply(x, function(col) tsc("div", "", col)))
+  )
+  self$contents <- contents
   invisible(self)
 })
