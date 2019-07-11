@@ -2,7 +2,7 @@ Package: htable
 Type: Package
 Title: Create HTML tables from a data.frame
 Version: 0.1.0
-Authors@R: person("Tucker", "Fazendin", email = "tuckerfazendin@gmail.com", role = c("aut",))
+Authors@R: person("Tucker", "Fazendin", email = "tuckerfazendin@gmail.com", role = c("aut", "cre"))
 Maintainer: Tucker Fazendin <tuckerfazendin@gmail.com>
 Description: Create easily and flexibly style-able HTML tables from a
   data.frame.
