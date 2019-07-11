@@ -198,7 +198,8 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], paste0("$", format(x, big.mark = ",")))
+    # literal $ sign was messing up rendering in some cases
+    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], paste0("&dollar;", format(x, big.mark = ",")))
   }
   
   invisible(self)

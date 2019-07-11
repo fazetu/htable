@@ -18,3 +18,7 @@ Collate:
     'import.R'
     'row_styles.R'
     'table_styles.R'
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
