@@ -17,13 +17,15 @@ knitr::opts_chunk$set(
 
 # htable
 
-The goal of htable is to translate R data.frames into styled HTML tables.
+The goal of htable is to easily and transparently translate R data.frames into styled HTML tables.
 
 ## Installation
 
+Make sure to build with vignettes to view examples of styling the tables.
+
 ``` r
 # install.packages("devtools")
-devtools::install_github("fazetu/htable")
+devtools::install_github("fazetu/htable", build_vignettes = TRUE)
 ```
 
 ## Examples
