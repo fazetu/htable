@@ -237,7 +237,9 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
     rx <- range(x, na.rm = TRUE) # range x
     sx <- (x - rx[1]) / diff(rx) # scaled x
     # undo any data bars styling if this happens after
-    color_scale_styles <- sprintf("border-radius:0;padding-right:0;background-color:%s;width:100%%;", rgb(pal(sx), max = 255))
+    color_scale_colors <- rep("inherit", length(sx))
+    color_scale_colors[!is.na(sx)] <- rgb(pal(sx[!is.na(sx)]), max = 255)
+    color_scale_styles <- sprintf("border-radius:0;padding-right:0;background-color:%s;width:100%%;", color_scale_colors)
     self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], color_scale_styles)
   }
   
@@ -265,6 +267,8 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
+  color <- rep(color, nrow(self$data))
+  
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -275,7 +279,9 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
 
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
+    color[is.na(x)] <- "inherit"
     width <- (x / max(abs(x), na.rm = na.rm)) * 100
+    width[is.na(x)] <- 0
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
     bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:4px;padding-right:2px;background-color:%s;width:%.2f%%;",
                           color, width)
