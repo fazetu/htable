@@ -3,19 +3,20 @@
 
 # htable
 
-The goal of htable is to translate R data.frames into styled HTML
-tables.
+The goal of htable is to easily and transparently translate R
+data.frames into styled HTML tables.
 
 ## Installation
 
+Make sure to build with vignettes to view examples of styling the
+tables.
+
 ``` r
 # install.packages("devtools")
-devtools::install_github("fazetu/htable")
+devtools::install_github("fazetu/htable", build_vignettes = TRUE)
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Examples
 
 ``` r
 library(htable)
@@ -43,7 +44,7 @@ To get the HTML for this table:
 
 ``` r
 ht$render()
-#> [1] "<table style='margin-left:auto;margin-right:auto;'><thead><tr><th><span>A</span></th><th><span>B</span></th><th><span>C</span></th><th><span>D</span></th><th><span>E</span></th><th><span>Pct</span></th><th><span>Big</span></th><th><span>Money</span></th></tr></thead><tbody><tr><td><span>1</span></td><td><span>10</span></td><td><span>-4</span></td><td><span>a</span></td><td><span>1</span></td><td><span>0.492585231550038</span></td><td><span>100000</span></td><td><span>100</span></td></tr><tr><td><span>2</span></td><td><span>9</span></td><td><span>-3</span></td><td><span>b</span></td><td><span>NA</span></td><td><span>0.76806613872759</span></td><td><span>100001</span></td><td><span>200</span></td></tr><tr><td><span>3</span></td><td><span>8</span></td><td><span>-2</span></td><td><span>c</span></td><td><span>2</span></td><td><span>0.348551977192983</span></td><td><span>100002</span></td><td><span>-100</span></td></tr><tr><td><span>4</span></td><td><span>7</span></td><td><span>-1</span></td><td><span>d</span></td><td><span>NA</span></td><td><span>0.771511870902032</span></td><td><span>100003</span></td><td><span>-200</span></td></tr><tr><td><span>5</span></td><td><span>6</span></td><td><span>0</span></td><td><span>e</span></td><td><span>3</span></td><td><span>0.141470255097374</span></td><td><span>100004</span></td><td><span>1000.11</span></td></tr><tr><td><span>6</span></td><td><span>5</span></td><td><span>1</span></td><td><span>f</span></td><td><span>NA</span></td><td><span>0.775738270487636</span></td><td><span>100005</span></td><td><span>2000.22</span></td></tr><tr><td><span>7</span></td><td><span>4</span></td><td><span>2</span></td><td><span>g</span></td><td><span>4</span></td><td><span>0.626521660713479</span></td><td><span>100006</span></td><td><span>-1000.11</span></td></tr><tr><td><span>8</span></td><td><span>3</span></td><td><span>3</span></td><td><span>h</span></td><td><span>NA</span></td><td><span>0.0925577846355736</span></td><td><span>100007</span></td><td><span>-2000.22</span></td></tr><tr><td><span>9</span></td><td><span>2</span></td><td><span>4</span></td><td><span>i</span></td><td><span>5</span></td><td><span>0.405598992016166</span></td><td><span>100008</span></td><td><span>0</span></td></tr><tr><td><span>10</span></td><td><span>1</span></td><td><span>5</span></td><td><span>j</span></td><td><span>NA</span></td><td><span>0.289630953222513</span></td><td><span>100009</span></td><td><span>0.11</span></td></tr></tbody></table>"
+#> [1] "<table style='margin-left:auto;margin-right:auto;'><thead><tr><th><div>A</div></th><th><div>B</div></th><th><div>C</div></th><th><div>D</div></th><th><div>E</div></th><th><div>Pct</div></th><th><div>Big</div></th><th><div>Money</div></th></tr></thead><tbody><tr><td><div>1</div></td><td><div>10</div></td><td><div>-4</div></td><td><div>a</div></td><td><div>1</div></td><td><div>0.98766976268962</div></td><td><div>100000</div></td><td><div>100</div></td></tr><tr><td><div>2</div></td><td><div>9</div></td><td><div>-3</div></td><td><div>b</div></td><td><div>NA</div></td><td><div>0.83207360515371</div></td><td><div>100001</div></td><td><div>200</div></td></tr><tr><td><div>3</div></td><td><div>8</div></td><td><div>-2</div></td><td><div>c</div></td><td><div>2</div></td><td><div>0.313282870454714</div></td><td><div>100002</div></td><td><div>-100</div></td></tr><tr><td><div>4</div></td><td><div>7</div></td><td><div>-1</div></td><td><div>d</div></td><td><div>NA</div></td><td><div>0.487539564725012</div></td><td><div>100003</div></td><td><div>-200</div></td></tr><tr><td><div>5</div></td><td><div>6</div></td><td><div>0</div></td><td><div>e</div></td><td><div>3</div></td><td><div>0.233070042915642</div></td><td><div>100004</div></td><td><div>1000.11</div></td></tr><tr><td><div>6</div></td><td><div>5</div></td><td><div>1</div></td><td><div>f</div></td><td><div>NA</div></td><td><div>0.515593397431076</div></td><td><div>100005</div></td><td><div>2000.22</div></td></tr><tr><td><div>7</div></td><td><div>4</div></td><td><div>2</div></td><td><div>g</div></td><td><div>4</div></td><td><div>0.0739094286691397</div></td><td><div>100006</div></td><td><div>-1000.11</div></td></tr><tr><td><div>8</div></td><td><div>3</div></td><td><div>3</div></td><td><div>h</div></td><td><div>NA</div></td><td><div>0.552099404623732</div></td><td><div>100007</div></td><td><div>-2000.22</div></td></tr><tr><td><div>9</div></td><td><div>2</div></td><td><div>4</div></td><td><div>i</div></td><td><div>5</div></td><td><div>0.715031072264537</div></td><td><div>100008</div></td><td><div>0</div></td></tr><tr><td><div>10</div></td><td><div>1</div></td><td><div>5</div></td><td><div>j</div></td><td><div>NA</div></td><td><div>0.521291874814779</div></td><td><div>100009</div></td><td><div>0.11</div></td></tr></tbody></table>"
 ```
 
 To write the HTML to a file:
@@ -68,49 +69,81 @@ ht$Rmd()
 
 <th>
 
-<span>A</span>
+<div>
+
+A
+
+</div>
 
 </th>
 
 <th>
 
-<span>B</span>
+<div>
+
+B
+
+</div>
 
 </th>
 
 <th>
 
-<span>C</span>
+<div>
+
+C
+
+</div>
 
 </th>
 
 <th>
 
-<span>D</span>
+<div>
+
+D
+
+</div>
 
 </th>
 
 <th>
 
-<span>E</span>
+<div>
+
+E
+
+</div>
 
 </th>
 
 <th>
 
-<span>Pct</span>
+<div>
+
+Pct
+
+</div>
 
 </th>
 
 <th>
 
-<span>Big</span>
+<div>
+
+Big
+
+</div>
 
 </th>
 
 <th>
 
-<span>Money</span>
+<div>
+
+Money
+
+</div>
 
 </th>
 
@@ -124,101 +157,81 @@ ht$Rmd()
 
 <td>
 
-<span>1</span>
+<div>
+
+1
+
+</div>
 
 </td>
 
 <td>
 
-<span>10</span>
+<div>
+
+10
+
+</div>
 
 </td>
 
 <td>
 
-<span>-4</span>
+<div>
+
+\-4
+
+</div>
 
 </td>
 
 <td>
 
-<span>a</span>
+<div>
+
+a
+
+</div>
 
 </td>
 
 <td>
 
-<span>1</span>
+<div>
+
+1
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.492585231550038</span>
+<div>
+
+0.98766976268962
+
+</div>
 
 </td>
 
 <td>
 
-<span>100000</span>
+<div>
+
+100000
+
+</div>
 
 </td>
 
 <td>
 
-<span>100</span>
+<div>
 
-</td>
+100
 
-</tr>
-
-<tr>
-
-<td>
-
-<span>2</span>
-
-</td>
-
-<td>
-
-<span>9</span>
-
-</td>
-
-<td>
-
-<span>-3</span>
-
-</td>
-
-<td>
-
-<span>b</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>0.76806613872759</span>
-
-</td>
-
-<td>
-
-<span>100001</span>
-
-</td>
-
-<td>
-
-<span>200</span>
+</div>
 
 </td>
 
@@ -228,101 +241,81 @@ ht$Rmd()
 
 <td>
 
-<span>3</span>
+<div>
+
+2
+
+</div>
 
 </td>
 
 <td>
 
-<span>8</span>
+<div>
+
+9
+
+</div>
 
 </td>
 
 <td>
 
-<span>-2</span>
+<div>
+
+\-3
+
+</div>
 
 </td>
 
 <td>
 
-<span>c</span>
+<div>
+
+b
+
+</div>
 
 </td>
 
 <td>
 
-<span>2</span>
+<div>
+
+NA
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.348551977192983</span>
+<div>
+
+0.83207360515371
+
+</div>
 
 </td>
 
 <td>
 
-<span>100002</span>
+<div>
+
+100001
+
+</div>
 
 </td>
 
 <td>
 
-<span>-100</span>
+<div>
 
-</td>
+200
 
-</tr>
-
-<tr>
-
-<td>
-
-<span>4</span>
-
-</td>
-
-<td>
-
-<span>7</span>
-
-</td>
-
-<td>
-
-<span>-1</span>
-
-</td>
-
-<td>
-
-<span>d</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>0.771511870902032</span>
-
-</td>
-
-<td>
-
-<span>100003</span>
-
-</td>
-
-<td>
-
-<span>-200</span>
+</div>
 
 </td>
 
@@ -332,101 +325,81 @@ ht$Rmd()
 
 <td>
 
-<span>5</span>
+<div>
+
+3
+
+</div>
 
 </td>
 
 <td>
 
-<span>6</span>
+<div>
+
+8
+
+</div>
 
 </td>
 
 <td>
 
-<span>0</span>
+<div>
+
+\-2
+
+</div>
 
 </td>
 
 <td>
 
-<span>e</span>
+<div>
+
+c
+
+</div>
 
 </td>
 
 <td>
 
-<span>3</span>
+<div>
+
+2
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.141470255097374</span>
+<div>
+
+0.313282870454714
+
+</div>
 
 </td>
 
 <td>
 
-<span>100004</span>
+<div>
+
+100002
+
+</div>
 
 </td>
 
 <td>
 
-<span>1000.11</span>
+<div>
 
-</td>
+\-100
 
-</tr>
-
-<tr>
-
-<td>
-
-<span>6</span>
-
-</td>
-
-<td>
-
-<span>5</span>
-
-</td>
-
-<td>
-
-<span>1</span>
-
-</td>
-
-<td>
-
-<span>f</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>0.775738270487636</span>
-
-</td>
-
-<td>
-
-<span>100005</span>
-
-</td>
-
-<td>
-
-<span>2000.22</span>
+</div>
 
 </td>
 
@@ -436,101 +409,81 @@ ht$Rmd()
 
 <td>
 
-<span>7</span>
+<div>
+
+4
+
+</div>
 
 </td>
 
 <td>
 
-<span>4</span>
+<div>
+
+7
+
+</div>
 
 </td>
 
 <td>
 
-<span>2</span>
+<div>
+
+\-1
+
+</div>
 
 </td>
 
 <td>
 
-<span>g</span>
+<div>
+
+d
+
+</div>
 
 </td>
 
 <td>
 
-<span>4</span>
+<div>
+
+NA
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.626521660713479</span>
+<div>
+
+0.487539564725012
+
+</div>
 
 </td>
 
 <td>
 
-<span>100006</span>
+<div>
+
+100003
+
+</div>
 
 </td>
 
 <td>
 
-<span>-1000.11</span>
+<div>
 
-</td>
+\-200
 
-</tr>
-
-<tr>
-
-<td>
-
-<span>8</span>
-
-</td>
-
-<td>
-
-<span>3</span>
-
-</td>
-
-<td>
-
-<span>3</span>
-
-</td>
-
-<td>
-
-<span>h</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>0.0925577846355736</span>
-
-</td>
-
-<td>
-
-<span>100007</span>
-
-</td>
-
-<td>
-
-<span>-2000.22</span>
+</div>
 
 </td>
 
@@ -540,49 +493,81 @@ ht$Rmd()
 
 <td>
 
-<span>9</span>
+<div>
+
+5
+
+</div>
 
 </td>
 
 <td>
 
-<span>2</span>
+<div>
+
+6
+
+</div>
 
 </td>
 
 <td>
 
-<span>4</span>
+<div>
+
+0
+
+</div>
 
 </td>
 
 <td>
 
-<span>i</span>
+<div>
+
+e
+
+</div>
 
 </td>
 
 <td>
 
-<span>5</span>
+<div>
+
+3
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.405598992016166</span>
+<div>
+
+0.233070042915642
+
+</div>
 
 </td>
 
 <td>
 
-<span>100008</span>
+<div>
+
+100004
+
+</div>
 
 </td>
 
 <td>
 
-<span>0</span>
+<div>
+
+1000.11
+
+</div>
 
 </td>
 
@@ -592,49 +577,417 @@ ht$Rmd()
 
 <td>
 
-<span>10</span>
+<div>
+
+6
+
+</div>
 
 </td>
 
 <td>
 
-<span>1</span>
+<div>
+
+5
+
+</div>
 
 </td>
 
 <td>
 
-<span>5</span>
+<div>
+
+1
+
+</div>
 
 </td>
 
 <td>
 
-<span>j</span>
+<div>
+
+f
+
+</div>
 
 </td>
 
 <td>
 
-<span>NA</span>
+<div>
+
+NA
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.289630953222513</span>
+<div>
+
+0.515593397431076
+
+</div>
 
 </td>
 
 <td>
 
-<span>100009</span>
+<div>
+
+100005
+
+</div>
 
 </td>
 
 <td>
 
-<span>0.11</span>
+<div>
+
+2000.22
+
+</div>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<div>
+
+7
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+4
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+2
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+g
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+4
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0.0739094286691397
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+100006
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+\-1000.11
+
+</div>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<div>
+
+8
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+3
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+3
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+h
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+NA
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0.552099404623732
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+100007
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+\-2000.22
+
+</div>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<div>
+
+9
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+2
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+4
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+i
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+5
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0.715031072264537
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+100008
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0
+
+</div>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+<div>
+
+10
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+1
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+5
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+j
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+NA
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0.521291874814779
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+100009
+
+</div>
+
+</td>
+
+<td>
+
+<div>
+
+0.11
+
+</div>
 
 </td>
 
@@ -644,601 +997,18 @@ ht$Rmd()
 
 </table>
 
-### Format a column
-
-3 types of numeric text formatting is supported:
-
-  - Percent
-  - Comma
-  - Dollar
-
-<!-- end list -->
+When not working in an RMarkdown file, use the `View()` method to see
+the rendered HTML table.
 
 ``` r
-ht$col_pct_fmt(6)
-ht$col_comma_fmt(7)
-ht$col_dollar_fmt(8)
+ht$View()
 ```
 
-Since `ht` is a reference class object each formatting operation is done
-in place.
+For examples on how to style the tables, see the
+vignette.
+
+<!-- Originally tried to include styles here, but github did not render the styled HTML tables -->
 
 ``` r
-ht$Rmd()
-```
-
-<table style="margin-left:auto;margin-right:auto;">
-
-<thead>
-
-<tr>
-
-<th>
-
-<span>A</span>
-
-</th>
-
-<th>
-
-<span>B</span>
-
-</th>
-
-<th>
-
-<span>C</span>
-
-</th>
-
-<th>
-
-<span>D</span>
-
-</th>
-
-<th>
-
-<span>E</span>
-
-</th>
-
-<th>
-
-<span>Pct</span>
-
-</th>
-
-<th>
-
-<span>Big</span>
-
-</th>
-
-<th>
-
-<span>Money</span>
-
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-<span>1</span>
-
-</td>
-
-<td>
-
-<span>10</span>
-
-</td>
-
-<td>
-
-<span>-4</span>
-
-</td>
-
-<td>
-
-<span>a</span>
-
-</td>
-
-<td>
-
-<span>1</span>
-
-</td>
-
-<td>
-
-<span>49.26%</span>
-
-</td>
-
-<td>
-
-<span>100,000</span>
-
-</td>
-
-<td>
-
-<span>$ 100.00</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>2</span>
-
-</td>
-
-<td>
-
-<span>9</span>
-
-</td>
-
-<td>
-
-<span>-3</span>
-
-</td>
-
-<td>
-
-<span>b</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>76.81%</span>
-
-</td>
-
-<td>
-
-<span>100,001</span>
-
-</td>
-
-<td>
-
-<span>$ 200.00</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>3</span>
-
-</td>
-
-<td>
-
-<span>8</span>
-
-</td>
-
-<td>
-
-<span>-2</span>
-
-</td>
-
-<td>
-
-<span>c</span>
-
-</td>
-
-<td>
-
-<span>2</span>
-
-</td>
-
-<td>
-
-<span>34.86%</span>
-
-</td>
-
-<td>
-
-<span>100,002</span>
-
-</td>
-
-<td>
-
-<span>$ -100.00</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>4</span>
-
-</td>
-
-<td>
-
-<span>7</span>
-
-</td>
-
-<td>
-
-<span>-1</span>
-
-</td>
-
-<td>
-
-<span>d</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>77.15%</span>
-
-</td>
-
-<td>
-
-<span>100,003</span>
-
-</td>
-
-<td>
-
-<span>$ -200.00</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>5</span>
-
-</td>
-
-<td>
-
-<span>6</span>
-
-</td>
-
-<td>
-
-<span>0</span>
-
-</td>
-
-<td>
-
-<span>e</span>
-
-</td>
-
-<td>
-
-<span>3</span>
-
-</td>
-
-<td>
-
-<span>14.15%</span>
-
-</td>
-
-<td>
-
-<span>100,004</span>
-
-</td>
-
-<td>
-
-<span>$ 1,000.11</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>6</span>
-
-</td>
-
-<td>
-
-<span>5</span>
-
-</td>
-
-<td>
-
-<span>1</span>
-
-</td>
-
-<td>
-
-<span>f</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>77.57%</span>
-
-</td>
-
-<td>
-
-<span>100,005</span>
-
-</td>
-
-<td>
-
-<span>$
-2,000.22</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>7</span>
-
-</td>
-
-<td>
-
-<span>4</span>
-
-</td>
-
-<td>
-
-<span>2</span>
-
-</td>
-
-<td>
-
-<span>g</span>
-
-</td>
-
-<td>
-
-<span>4</span>
-
-</td>
-
-<td>
-
-<span>62.65%</span>
-
-</td>
-
-<td>
-
-<span>100,006</span>
-
-</td>
-
-<td>
-
-<span>\(-1,000.11</span></td></tr><tr><td><span>8</span></td><td><span>3</span></td><td><span>3</span></td><td><span>h</span></td><td><span>NA</span></td><td><span>9.26%</span></td><td><span>100,007</span></td><td><span>\)-2,000.22</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>9</span>
-
-</td>
-
-<td>
-
-<span>2</span>
-
-</td>
-
-<td>
-
-<span>4</span>
-
-</td>
-
-<td>
-
-<span>i</span>
-
-</td>
-
-<td>
-
-<span>5</span>
-
-</td>
-
-<td>
-
-<span>40.56%</span>
-
-</td>
-
-<td>
-
-<span>100,008</span>
-
-</td>
-
-<td>
-
-<span>$ 0.00</span>
-
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-<span>10</span>
-
-</td>
-
-<td>
-
-<span>1</span>
-
-</td>
-
-<td>
-
-<span>5</span>
-
-</td>
-
-<td>
-
-<span>j</span>
-
-</td>
-
-<td>
-
-<span>NA</span>
-
-</td>
-
-<td>
-
-<span>28.96%</span>
-
-</td>
-
-<td>
-
-<span>100,009</span>
-
-</td>
-
-<td>
-
-<span>$ 0.11</span>
-
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-These operations change the field `contents`. This matrix is what is
-used to get the content for each HTML table cell.
-
-``` r
-ht$contents
-#>       A                 B                 C                
-#>  [1,] "<span>A</span>"  "<span>B</span>"  "<span>C</span>" 
-#>  [2,] "<span>1</span>"  "<span>10</span>" "<span>-4</span>"
-#>  [3,] "<span>2</span>"  "<span>9</span>"  "<span>-3</span>"
-#>  [4,] "<span>3</span>"  "<span>8</span>"  "<span>-2</span>"
-#>  [5,] "<span>4</span>"  "<span>7</span>"  "<span>-1</span>"
-#>  [6,] "<span>5</span>"  "<span>6</span>"  "<span>0</span>" 
-#>  [7,] "<span>6</span>"  "<span>5</span>"  "<span>1</span>" 
-#>  [8,] "<span>7</span>"  "<span>4</span>"  "<span>2</span>" 
-#>  [9,] "<span>8</span>"  "<span>3</span>"  "<span>3</span>" 
-#> [10,] "<span>9</span>"  "<span>2</span>"  "<span>4</span>" 
-#> [11,] "<span>10</span>" "<span>1</span>"  "<span>5</span>" 
-#>       D                E                 Pct                  
-#>  [1,] "<span>D</span>" "<span>E</span>"  "<span>Pct</span>"   
-#>  [2,] "<span>a</span>" "<span>1</span>"  "<span>49.26%</span>"
-#>  [3,] "<span>b</span>" "<span>NA</span>" "<span>76.81%</span>"
-#>  [4,] "<span>c</span>" "<span>2</span>"  "<span>34.86%</span>"
-#>  [5,] "<span>d</span>" "<span>NA</span>" "<span>77.15%</span>"
-#>  [6,] "<span>e</span>" "<span>3</span>"  "<span>14.15%</span>"
-#>  [7,] "<span>f</span>" "<span>NA</span>" "<span>77.57%</span>"
-#>  [8,] "<span>g</span>" "<span>4</span>"  "<span>62.65%</span>"
-#>  [9,] "<span>h</span>" "<span>NA</span>" "<span>9.26%</span>" 
-#> [10,] "<span>i</span>" "<span>5</span>"  "<span>40.56%</span>"
-#> [11,] "<span>j</span>" "<span>NA</span>" "<span>28.96%</span>"
-#>       Big                    Money                    
-#>  [1,] "<span>Big</span>"     "<span>Money</span>"     
-#>  [2,] "<span>100,000</span>" "<span>$   100.00</span>"
-#>  [3,] "<span>100,001</span>" "<span>$   200.00</span>"
-#>  [4,] "<span>100,002</span>" "<span>$  -100.00</span>"
-#>  [5,] "<span>100,003</span>" "<span>$  -200.00</span>"
-#>  [6,] "<span>100,004</span>" "<span>$ 1,000.11</span>"
-#>  [7,] "<span>100,005</span>" "<span>$ 2,000.22</span>"
-#>  [8,] "<span>100,006</span>" "<span>$-1,000.11</span>"
-#>  [9,] "<span>100,007</span>" "<span>$-2,000.22</span>"
-#> [10,] "<span>100,008</span>" "<span>$     0.00</span>"
-#> [11,] "<span>100,009</span>" "<span>$     0.11</span>"
+vignette("htable", package = "htable")
 ```

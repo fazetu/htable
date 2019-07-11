@@ -1,0 +1,187 @@
+---
+title: "htable"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{htable}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(htable)
+```
+
+# Examples
+
+```{r}
+set.seed(0)
+ex <- data.frame(
+  A = 1:10,
+  B = 10:1,
+  C = -4:5,
+  D = letters[1:10],
+  E = c(1, NA, 2, NA, 3, NA, 4, NA, 5, NA),
+  Pct = runif(10),
+  Big = 100000:100009,
+  Money = c(100, 200, -100, -200, 1000.11, 2000.22, -1000.11, -2000.22, 0, 0.11),
+  stringsAsFactors = FALSE
+)
+```
+
+First create the HTable object in one of two ways:
+
+```{r}
+# ht <- HTable$new(ex)
+ht <- htable(ex)
+```
+
+To get the HTML for this table:
+
+```{r}
+ht$render()
+```
+
+To write the HTML to a file:
+
+```r
+ht$writeLines("table.html")
+```
+
+In an RMarkdown document, include in your chunk settings `results="asis"` in order to get the actual HTML table to render. This chunk has `results="asis"`.
+
+```{r, results="asis"}
+ht$Rmd()
+```
+
+When not working in an RMarkdown file, use the `View()` method to see the rendered HTML table.
+
+```r
+ht$View()
+```
+
+## Format a column
+
+3 types of numeric text formatting is supported:
+
+* Percent
+* Comma
+* Dollar
+
+```{r results="asis"}
+ht$col_pct_fmt(6)
+ht$col_comma_fmt(7)
+ht$col_dollar_fmt(8)
+```
+
+Since `ht` is a reference class object each formatting operation is done in place.
+
+```{r, results="asis"}
+ht$Rmd()
+```
+
+These operations change the `contents` field of `ht`. This matrix is what is used to get the content for each HTML table cell.
+
+## Style columns
+
+This demonstrates many of the available column styles. All available column stylings start with the prefix "col_".
+
+```{r, results="asis"}
+ht$col_bg_color(1, "red", include_header = TRUE)
+ht$col_color(1, "white", include_header = TRUE)
+ht$col_bold(2)
+ht$col_italic(3)
+ht$col_color_scale(6)
+ht$col_data_bar(8)
+ht$Rmd()
+```
+
+These operations change the `styles` field of `ht`. This matrix is what is used to apply styles to each `<th>` and `<td>` tag of the HTML table.
+
+### Reset styles and contents
+
+To start with a clean slate of styles:
+
+```{r, results="asis"}
+ht$clear_styles()
+ht$Rmd()
+```
+
+This clears the `styles` field of `ht`. There is also a similar `clear_all_styles()` method. This also clears `table_style`, `thead_style`, `tbody_style`, and `tr_styles` fields of `ht`.
+
+To start with a clean slate of contents:
+
+```{r, results="asis"}
+ht$reset_contents()
+ht$Rmd()
+```
+
+This resets the `contents` field of `ht`.
+
+## Style rows
+
+This demonstrates many of the avialable row and header styles. All available row styles start with the prefix "row_" and all available header styles start with "header_".
+
+Add an alternating text and background color:
+
+```{r, results="asis"}
+# first colors apply to odd rows and second color applies to even rows
+ht$row_alt_color("white", "black", include_header = TRUE)
+ht$row_alt_bg_color("black", "orange", include_header = TRUE)
+ht$Rmd()
+```
+
+Other row and header styles:
+
+```{r, results="asis"}
+ht$clear_styles()
+ht$row_bg_color(1, "red")
+ht$row_color(2, "blue")
+ht$row_bold(3)
+ht$row_italic(4)
+
+ht$header_bg_color("black")
+ht$header_italic()
+ht$header_color("white")
+ht$Rmd()
+```
+
+## Style cell
+
+Can target an individual cell as well. All available cell styles start with the prefix "cell_".
+
+```{r, results="asis"}
+ht$clear_styles()
+ht$cell_add_style(1, 1, "background-color:blue;font-weight:bold;color:white;")
+ht$Rmd()
+```
+
+## Final table
+
+This demonstrates a typical construction of a final table.
+
+```{r, results="asis"}
+ht$clear_styles()
+
+# pleasant overall styles
+ht$add_styles("padding:10px;font-size:14px;font-family:arial")
+ht$table_style_add("border-collapse:collapse;")
+ht$tr_styles_all_add("border-bottom:solid #A9A9A9;border-width:1px 0;")
+ht$tr_styles_which_add(1, "border-width:3px 0;")
+ht$tr_styles_which_add(length(ht$tr_styles), "border:none;")
+
+# edit the contents
+ht$col_pct_fmt(6)
+ht$col_comma_fmt(7)
+ht$col_dollar_fmt(8)
+
+ht$col_data_bar(1, "steelblue") # specify a color for bars
+ht$col_color_scale(6:8) # use default colors
+ht$Rmd()
+```

@@ -12,7 +12,7 @@ NULL
 #'   don't get used when rendering an HTable.
 #' @field contents A character matrix that determines the content of each cell
 #'   of the table. The first row is what gets put into the <th> tags. All other
-#'   rows get put into <td> tags. They should always be <span> elements.
+#'   rows get put into <td> tags. They should always be <div> elements.
 #' @field styles A character matrix that determines the styles of each cell of
 #'   the table. The first row is the styles of the <th> tags. All other rows are
 #'   the styles of the <td> tags. They should always be character strings with
@@ -47,12 +47,12 @@ HTable$set("public", "initialize", function(x,
   stopifnot(is.character(table_style), length(table_style) == 1)
   stopifnot(is.character(thead_style), length(thead_style) == 1)
   stopifnot(is.character(tbody_style), length(tbody_style) == 1)
-  stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) #  + 1 because all <th>'s go in 1 <tr>
+  stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) # + 1 because all <th>'s go in 1 <tr>
   
   styles <- rbind("", matrix("", nrow = nrow(x), ncol = ncol(x)))
   contents <- rbind(
-    tsc("span", "", colnames(x)),
-    do.call("cbind", lapply(x, function(col) tsc("span", "", col)))
+    tsc("div", "", colnames(x)),
+    do.call("cbind", lapply(x, function(col) tsc("div", "", col)))
   )
   
   self$data <- x

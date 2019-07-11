@@ -17,18 +17,18 @@ knitr::opts_chunk$set(
 
 # htable
 
-The goal of htable is to translate R data.frames into styled HTML tables.
+The goal of htable is to easily and transparently translate R data.frames into styled HTML tables.
 
 ## Installation
 
+Make sure to build with vignettes to view examples of styling the tables.
+
 ``` r
 # install.packages("devtools")
-devtools::install_github("fazetu/htable")
+devtools::install_github("fazetu/htable", build_vignettes = TRUE)
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+## Examples
 
 ```{r}
 library(htable)
@@ -70,28 +70,16 @@ In an RMarkdown document, include in your chunk settings `results="asis"` in ord
 ht$Rmd()
 ```
 
-### Format a column
+When not working in an RMarkdown file, use the `View()` method to see the rendered HTML table.
 
-3 types of numeric text formatting is supported:
-
-* Percent
-* Comma
-* Dollar
-
-```{r results="asis"}
-ht$col_pct_fmt(6)
-ht$col_comma_fmt(7)
-ht$col_dollar_fmt(8)
+```r
+ht$View()
 ```
 
-Since `ht` is a reference class object each formatting operation is done in place.
+For examples on how to style the tables, see the vignette.
 
-```{r, results="asis"}
-ht$Rmd()
-```
+<!-- Originally tried to include styles here, but github did not render the styled HTML tables --> 
 
-These operations change the field `contents`. This matrix is what is used to get the content for each HTML table cell.
-
-```{r}
-ht$contents
+```r
+vignette("htable", package = "htable")
 ```
