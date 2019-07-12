@@ -293,9 +293,69 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
     width[is.na(x)] <- 0
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
     bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:4px;padding-right:2px;background-color:%s;width:%.2f%%;",
-                          color, width)
+                          color, abs(width))
     self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
   }
 
+  invisible(self)
+})
+
+#' Apply a centered data bar element to columns
+#' 
+#' Change numeric column(s) to have a colored, centered data bar element in each
+#' cell. The length of the bar is based on the range of values in the column.
+#' Changes the \code{contents} field.
+#' 
+#' @name HTable_col_centered_data_bar
+#' @param col Numeric vector of which columns to target.
+#' @param color1 Character vector (length 1) of an HTML color name, hex color
+#'   code, or rgb color of the form rgb(x, y, z). Used to color the data bars
+#'   for the positive values.
+#' @param color2 Character vector (length 1) of an HTML color name, hex color
+#'   code, or rgb color of the form rgb(x, y, z). Used to color the data bars
+#'   for the negative values.
+#' @param exclude_rows Numeric vector of which rows to exclude from calculation
+#'   and styling.
+#' @param na.rm Boolean if \code{NA}'s should be removed when scaling the data
+#'   bars.
+HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lightgreen", color2 = "pink", exclude_rows = NULL, na.rm = TRUE) {
+  if (is.null(col)) return(invisible(self))
+  stopifnot(is.numeric(col))
+  stopifnot(is.character(color1), length(color1) == 1)
+  stopifnot(is.character(color2), length(color2) == 1)
+  stopifnot(all(sapply(self$data[, col], is.numeric)))
+  stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
+  
+  color1 <- rep(color1, nrow(self$data))
+  color2 <- rep(color2, nrow(self$data))
+  
+  if (is.null(exclude_rows)) {
+    data_exclude_rows <- -(1:nrow(self$data))
+    contents_exclude_rows <- 1
+  } else {
+    data_exclude_rows <- exclude_rows
+    contents_exclude_rows <- c(1, exclude_rows + 1)
+  }
+  
+  for (c in col) {
+    x <- self$data[-data_exclude_rows, c]
+    width <- (x / max(abs(x), na.rm = na.rm)) * 100
+    width[is.na(x)] <- 0
+    dist_center <- abs(width) * 0.5
+    
+    # first handle the negative-side bars
+    # linear-gradient(to right,transparent 0% 10%,lightgreen 10% 50%,transparent 50% 100%);
+    lg <- sprintf("linear-gradient(to right,transparent 0%% %.2f%%,%s %.2f%% 50%%,transparent 50%% 100%%);",
+                  50 - dist_center, color2, 50 - dist_center)
+    # now overwrite with positive-side bars
+    # linear-gradient(to right,transparent 0% 50%,lightgreen 50% 90%,transparent 90% 100%);
+    lg[width >= 0] <- sprintf("linear-gradient(to right,transparent 0%% 50%%,%s 50%% %.2f%%,transparent %.2f%% 100%%);",
+                              color1[width >= 0], dist_center[width >= 0] + 50, dist_center[width >= 0] + 50)
+
+    # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
+    bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:0;padding-right:2px;background:%s;width:100%%", lg)
+    self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
+  }
+  
   invisible(self)
 })
