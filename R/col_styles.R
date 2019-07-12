@@ -160,7 +160,7 @@ HTable$set("public", "col_pct_fmt", function(col = NULL) {
     x <- self$data[, c]
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, sprintf("%.2f%%", x * 100))
-    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
+    new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     self$contents[-1, c] <- new_content # replace
   }
   
@@ -183,7 +183,7 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
     x <- self$data[, c]
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, format(x, big.mark = ","))
-    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
+    new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     self$contents[-1, c] <- new_content
   }
   
@@ -206,7 +206,7 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
     x <- self$data[, c]
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, paste0("&dollar;", format(x, big.mark = ",")))
-    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
+    new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     # literal $ sign was messing up rendering in some cases
     self$contents[-1, c] <- new_content
   }
