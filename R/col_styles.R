@@ -158,7 +158,10 @@ HTable$set("public", "col_pct_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], sprintf("%.2f%%", x * 100))
+    new_content <- self$contents[-1, c] # -1 to skip header
+    new_content <- tag_replace_content(new_content, sprintf("%.2f%%", x * 100))
+    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
+    self$contents[-1, c] <- new_content # replace
   }
   
   invisible(self)
@@ -178,7 +181,10 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
-    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], format(x, big.mark = ","))
+    new_content <- self$contents[-1, c] # -1 to skip header
+    new_content <- tag_replace_content(new_content, format(x, big.mark = ","))
+    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
+    self$contents[-1, c] <- new_content
   }
   
   invisible(self)
@@ -198,8 +204,11 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   
   for (c in col) {
     x <- self$data[, c]
+    new_content <- self$contents[-1, c] # -1 to skip header
+    new_content <- tag_replace_content(new_content, paste0("&dollar;", format(x, big.mark = ",")))
+    new_content[is.na(x)] <- tag_replace_content(new_content, "NA")
     # literal $ sign was messing up rendering in some cases
-    self$contents[-1, c] <- tag_replace_content(self$contents[-1, c], paste0("&dollar;", format(x, big.mark = ",")))
+    self$contents[-1, c] <- new_content
   }
   
   invisible(self)
