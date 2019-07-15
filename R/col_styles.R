@@ -151,15 +151,19 @@ HTable$set("public", "col_color", function(col = NULL, color = NULL, include_hea
 #' 
 #' @name HTable_col_pct_fmt
 #' @param col Numeric vector of which columns to target.
-HTable$set("public", "col_pct_fmt", function(col = NULL) {
+#' @param mult100 Boolean if the values should be multiplied by 100 in order to
+#'   turn them into percents.
+HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
   if (is.null(col)) return(invisible(self))
   stopifnot(is.numeric(col))
   stopifnot(all(sapply(self$data[, col], is.numeric)))
   
   for (c in col) {
-    x <- self$data[, c]
+    if (mult100) x <- self$data[, c] * 100
+    else x <- self$data[, c]
+
     new_content <- self$contents[-1, c] # -1 to skip header
-    new_content <- tag_replace_content(new_content, sprintf("%.2f%%", x * 100))
+    new_content <- tag_replace_content(new_content, sprintf("%.2f%%", x))
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     self$contents[-1, c] <- new_content # replace
   }
