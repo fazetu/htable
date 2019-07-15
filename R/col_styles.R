@@ -280,8 +280,6 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
-  color <- rep(color, nrow(self$data))
-  
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -289,6 +287,8 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
     data_exclude_rows <- exclude_rows
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
+  
+  color <- rep(color, nrow(self$data[-data_exclude_rows, ]))
 
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
@@ -330,9 +330,6 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
   stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
-  color1 <- rep(color1, nrow(self$data))
-  color2 <- rep(color2, nrow(self$data))
-  
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -341,21 +338,27 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
   
+  color1 <- rep(color1, nrow(self$data[-data_exclude_rows, ]))
+  color2 <- rep(color2, nrow(self$data[-data_exclude_rows, ]))
+  
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
+    lg <- vector("character", length(x)) # background linear gradients
     width <- (x / max(abs(x), na.rm = na.rm)) * 100
     width[is.na(x)] <- 0
-    dist_center <- abs(width) * 0.5
     
-    # first handle the negative-side bars
+    # negative-side bars
+    neg_dist_center <- 50 - (abs(width) * 0.5)
     # linear-gradient(to right,transparent 0% 10%,lightgreen 10% 50%,transparent 50% 100%);
-    lg <- sprintf("linear-gradient(to right,transparent 0%% %.2f%%,%s %.2f%% 50%%,transparent 50%% 100%%);",
-                  50 - dist_center, color2, 50 - dist_center)
-    # now overwrite with positive-side bars
+    lg[width < 0] <- sprintf("linear-gradient(to right,transparent 0%% %.2f%%,%s %.2f%% 50%%,transparent 50%% 100%%);",
+                             neg_dist_center[width < 0], color2[width < 0], neg_dist_center[width < 0])
+    
+    # positive-side bars
+    pos_dist_center <- (abs(width) * 0.5) + 50
     # linear-gradient(to right,transparent 0% 50%,lightgreen 50% 90%,transparent 90% 100%);
     lg[width >= 0] <- sprintf("linear-gradient(to right,transparent 0%% 50%%,%s 50%% %.2f%%,transparent %.2f%% 100%%);",
-                              color1[width >= 0], dist_center[width >= 0] + 50, dist_center[width >= 0] + 50)
-
+                              color1[width >= 0], pos_dist_center[width >= 0], pos_dist_center[width >= 0])
+    
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
     bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:0;padding-right:2px;background:%s;width:100%%", lg)
     self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
