@@ -41,6 +41,8 @@ HTable$set("public", "tbody_style", "")
 HTable$set("public", "tr_styles", "")
 
 HTable$set("public", "initialize", function(x,
+                                            handle_rownames = c("drop", "add_first", "add_last"),
+                                            rownames_col_name = "RowNames",
                                             table_style = "margin-left:auto;margin-right:auto;",
                                             thead_style = "", tbody_style = "",
                                             tr_styles = rep("", nrow(x) + 1)) {
@@ -49,6 +51,25 @@ HTable$set("public", "initialize", function(x,
   stopifnot(is.character(tbody_style), length(tbody_style) == 1)
   stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) # + 1 because all <th>'s go in 1 <tr>
   
+  if (!is.null(rownames(x))) { # only care if it has rownames
+    handle_rownames <- match.arg(handle_rownames)
+    
+    if (handle_rownames == "drop") {
+      warning("Rownames will be dropped.", call. = FALSE, immediate. = TRUE)
+      rownames(x) <- NULL
+    } else if (handle_rownames == "add_first") {
+      cnms <- c(rownames_col_name, colnames(x))
+      x <- cbind(rownames(x), x)
+      rownames(x) <- NULL
+      colnames(x) <- cnms
+    } else if (handle_rownames == "add_last") {
+      cnms <- c(colnames(x), rownames_col_name)
+      x <- cbind(x, rownames(x))
+      rownames(x) <- NULL
+      colnames(x) <- cnms
+    }
+  }
+
   styles <- rbind("", matrix("", nrow = nrow(x), ncol = ncol(x)))
   contents <- rbind(
     tsc("div", "", colnames(x)),
@@ -68,6 +89,10 @@ HTable$set("public", "initialize", function(x,
 #' 
 #' Creates a new HTable reference class object from the given data frame.
 #' @param x Data frame.
+#' @param handle_rownames How to handle rownames. Either drop them, add them as
+#'   the first column, or add them as the last column.
+#' @param rownames_col_name Column name to use for the rownames if adding them
+#'   to \code{x}.
 #' @param table_style Character vector (of length 1). This is the CSS style
 #'   applied to the overall <table> tag.
 #' @param thead_style Character vector (of length 1). This is the CSS style
@@ -78,11 +103,15 @@ HTable$set("public", "initialize", function(x,
 #'   styles are applied to each <tr> tag in the table.
 #' @return Reference class object of class HTable.
 #' @export
-htable <- function(x, table_style = "margin-left:auto;margin-right:auto;",
+htable <- function(x, handle_rownames = c("drop", "add_first", "add_last"),
+                   rownames_col_name = "RowNames",
+                   table_style = "margin-left:auto;margin-right:auto;",
                    thead_style = "", tbody_style = "",
                    tr_styles = rep("", nrow(x) + 1)) {
-  HTable$new(x = x, table_style = table_style, thead_style = thead_style,
-             tbody_style = tbody_style, tr_styles = tr_styles)
+  HTable$new(x = x, handle_rownames = match.arg(handle_rownames),
+             rownames_col_name = rownames_col_name, table_style = table_style,
+             thead_style = thead_style, tbody_style = tbody_style,
+             tr_styles = tr_styles)
 }
 
 HTable$set("public", "print", function(...) {

@@ -4,12 +4,20 @@
 \alias{htable}
 \title{Create a new HTable object}
 \usage{
-htable(x, table_style = "margin-left:auto;margin-right:auto;",
+htable(x, handle_rownames = c("drop", "add_first", "add_last"),
+  rownames_col_name = "RowNames",
+  table_style = "margin-left:auto;margin-right:auto;",
   thead_style = "", tbody_style = "", tr_styles = rep("", nrow(x) +
   1))
 }
 \arguments{
 \item{x}{Data frame.}
+
+\item{handle_rownames}{How to handle rownames. Either drop them, add them as
+the first column, or add them as the last column.}
+
+\item{rownames_col_name}{Column name to use for the rownames if adding them
+to \code{x}.}
 
 \item{table_style}{Character vector (of length 1). This is the CSS style
 applied to the overall <table> tag.}
