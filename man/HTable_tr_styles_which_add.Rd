@@ -3,6 +3,9 @@
 \name{HTable_tr_styles_which_add}
 \alias{HTable_tr_styles_which_add}
 \title{Add styles to the <tr> tags at certain tags}
+\usage{
+obj$tr_styles_which_add(which = NULL, style = NULL)
+}
 \arguments{
 \item{which}{Numeric vector of which <tr> tags to target.}
 
@@ -10,6 +13,6 @@
 \code{which}.}
 }
 \description{
-Add to the existing styles located in the \code{tr_styles} field, but only to
-the ones specified.
+Add to the existing styles located in the \code{tr_styles}
+  field, but only to the ones specified.
 }

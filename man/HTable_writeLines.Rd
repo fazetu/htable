@@ -3,6 +3,17 @@
 \name{HTable_writeLines}
 \alias{HTable_writeLines}
 \title{Write the HTML for the HTable and write it to a file}
+\usage{
+obj$writeLines(con = stdout(), sep = "\n", useBytes = FALSE)
+}
+\arguments{
+\item{con}{A connection object or character string. \code{\link{writeLines}}.}
+
+\item{sep}{character string. A string to be written to teh connection after
+each line of text. \code{\link{writeLines}}.}
+
+\item{useBytes}{logical. \code{\link{writeLines}}.}
+}
 \description{
 Write the HTML for the HTable and write it to a file
 }

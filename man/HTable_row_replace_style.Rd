@@ -3,6 +3,10 @@
 \name{HTable_row_replace_style}
 \alias{HTable_row_replace_style}
 \title{Replace the style in a row}
+\usage{
+obj$row_replace_style(row = NULL, style = NULL, include_header =
+  FALSE)
+}
 \arguments{
 \item{row}{Numeric vector of which rows to target.}
 
@@ -13,6 +17,6 @@
 but if \code{TRUE}, \code{row = 1} will target the header.}
 }
 \description{
-Replace the style of each <td> and, optionally, <th> tag in a row. Changes
-the \code{styles} field.
+Replace the style of each <td> and, optionally, <th> tag in a
+  row. Changes the \code{styles} field.
 }

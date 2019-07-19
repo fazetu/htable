@@ -3,10 +3,14 @@
 \name{HTable_header_color}
 \alias{HTable_header_color}
 \title{Add a text color style to the header}
+\usage{
+obj$header_color(color = NULL)
+}
 \arguments{
 \item{color}{Character vector (length 1) of an HTML color name, hex color
 code, or rgb color of the form rgb(x, y, z).}
 }
 \description{
-Add a text color style to each <th> tag. Changes the \code{styles} field.
+Add a text color style to each <th> tag. Changes the
+  \code{styles} field.
 }

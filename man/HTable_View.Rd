@@ -3,6 +3,9 @@
 \name{HTable_View}
 \alias{HTable_View}
 \title{View the HTable in the RStudio Viewer tab}
+\usage{
+obj$View()
+}
 \description{
 View the HTable in the RStudio Viewer tab
 }

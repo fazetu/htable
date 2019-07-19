@@ -2,19 +2,18 @@
 % Please edit documentation in R/col_styles.R
 \name{HTable_col_color_scale}
 \alias{HTable_col_color_scale}
-\title{Apply a color scale gradient to columns
- 
-Change numeric column(s) to have a background color gradient based on the
-range of values in the column.}
+\title{Apply a color scale gradient to columns}
+\usage{
+obj$col_color_scale(col = NULL, color = c("#63BE7B", "#FFEB84",
+  "#F8696B"), exclude_rows = NULL, na.rm = TRUE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{exclude_rows}{Numeric vector of which rows to exclude from calculation
 and coloring.}
 }
 \description{
-Apply a color scale gradient to columns
- 
-Change numeric column(s) to have a background color gradient based on the
-range of values in the column.
+Change numeric column(s) to have a background color gradient
+  based on the range of values in the column.
 }

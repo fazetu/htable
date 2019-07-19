@@ -3,13 +3,16 @@
 \name{HTable_col_pct_fmt}
 \alias{HTable_col_pct_fmt}
 \title{Edit a column to have a percent format}
+\usage{
+obj$col_pct_fmt(col = NULL, mult100 = TRUE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{mult100}{Boolean if the values should be multiplied by 100 in order to
 turn them into percents.}
 }
 \description{
-Change numeric column(s) to have a percent formatting. Changes the
-\code{contents} field.
+Change numeric column(s) to have a percent formatting. Changes
+  the \code{contents} field.
 }

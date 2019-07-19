@@ -3,13 +3,16 @@
 \name{HTable_col_clear_style}
 \alias{HTable_col_clear_style}
 \title{Clear the style in a column}
+\usage{
+obj$col_clear_style(col = NULL, include_header = FALSE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{include_header}{Boolean if the <th> tags in the columns should also be
 styled.}
 }
 \description{
-Clear the style of each <td> and, optionally, <th> tag in a column. Changes
-the \code{styles} field.
+Clear the style of each <td> and, optionally, <th> tag in a
+  column. Changes the \code{styles} field.
 }

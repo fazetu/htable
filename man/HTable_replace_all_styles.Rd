@@ -3,11 +3,15 @@
 \name{HTable_replace_all_styles}
 \alias{HTable_replace_all_styles}
 \title{Replace the style of every HTML table tag}
+\usage{
+obj$replace_all_styles(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
 Replace the style of the following fields: \code{table_style},
-\code{thead_style}, \code{tbody_style}, and each element of \code{tr_styles}.
-It also replaces the style of every entry in the \code{styles} field.
+  \code{thead_style}, \code{tbody_style}, and each element of
+  \code{tr_styles}. It also replaces the style of every entry in the
+  \code{styles} field.
 }

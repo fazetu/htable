@@ -3,6 +3,10 @@
 \name{HTable_header_italic}
 \alias{HTable_header_italic}
 \title{Add an italic style to the header}
+\usage{
+obj$header_italic()
+}
 \description{
-Add an italic style to each <th> tag. Changes the \code{styles} field.
+Add an italic style to each <th> tag. Changes the \code{styles}
+  field.
 }

@@ -3,6 +3,9 @@
 \name{HTable_row_color}
 \alias{HTable_row_color}
 \title{Add a text color style to a row}
+\usage{
+obj$row_color(row = NULL, color = NULL, include_header = FALSE)
+}
 \arguments{
 \item{row}{Numeric vector of which rows to target.}
 
@@ -14,6 +17,6 @@ code, or rgb color of the form rgb(x, y, z).}
 but if \code{TRUE}, \code{row = 1} will target the header.}
 }
 \description{
-Add a text style to each <td> and, optionally, <th> tag in a row. Changes the
-\code{styles} field.
+Add a text style to each <td> and, optionally, <th> tag in a
+  row. Changes the \code{styles} field.
 }

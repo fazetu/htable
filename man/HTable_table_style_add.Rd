@@ -3,9 +3,13 @@
 \name{HTable_table_style_add}
 \alias{HTable_table_style_add}
 \title{Add a style to the <table> tag}
+\usage{
+obj$table_style_add(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Add to the existing styles located in the \code{table_style} field.
+Add to the existing styles located in the \code{table_style}
+  field.
 }

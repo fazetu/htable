@@ -3,6 +3,9 @@
 \name{HTable_table_style_clear}
 \alias{HTable_table_style_clear}
 \title{Clear the <table> tag style}
+\usage{
+obj$table_style_clear()
+}
 \description{
 Clear any styles in the \code{table_style} field.
 }

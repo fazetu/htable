@@ -18,6 +18,7 @@ Collate:
     'import.R'
     'row_styles.R'
     'table_styles.R'
+    'tag.R'
 Suggests: 
     knitr,
     rmarkdown

@@ -3,6 +3,9 @@
 \name{HTable_Rmd}
 \alias{HTable_Rmd}
 \title{Put an HTable into an RMarkdown Document}
+\usage{
+obj$Rmd()
+}
 \description{
 Put an HTable into an RMarkdown Document
 }

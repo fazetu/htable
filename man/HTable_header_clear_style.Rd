@@ -3,9 +3,13 @@
 \name{HTable_header_clear_style}
 \alias{HTable_header_clear_style}
 \title{Clear the style of the header}
+\usage{
+obj$header_clear_style()
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Clear the style of each <th> tag. Changes the \code{styles} field.
+Clear the style of each <th> tag. Changes the \code{styles}
+  field.
 }

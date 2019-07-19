@@ -3,10 +3,13 @@
 \name{HTable_col_dollar_fmt}
 \alias{HTable_col_dollar_fmt}
 \title{Edit a column to have a dollar format}
+\usage{
+obj$col_dollar_fmt(col = NULL)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 }
 \description{
-Change numeric column(s) to have a dollar formatting. Changes the
-\code{contents} field.
+Change numeric column(s) to have a dollar formatting. Changes
+  the \code{contents} field.
 }

@@ -3,8 +3,11 @@
 \name{HTable_reset_contents}
 \alias{HTable_reset_contents}
 \title{Reset the contents of every <th> and <td> tag}
+\usage{
+obj$reset_contents()
+}
 \description{
-Reset the contents of every entry in the \code{contents} field. This is a
-character matrix of contents that represents the contents of each <th> and
-<td> tag.
+Reset the contents of every entry in the \code{contents} field.
+  This is a character matrix of contents that represents the contents of each
+  <th> and <td> tag.
 }

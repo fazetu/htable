@@ -3,11 +3,17 @@
 \name{HTable_tr_styles_all_clear}
 \alias{HTable_tr_styles_all_clear}
 \title{Clear the <tr> tag styles}
+\usage{
+obj$tr_styles_all_clear()
+
+obj$tr_styles_which_clear(which = NULL)
+}
 \arguments{
 \item{which}{Numeric vector of which <tr> tags to target.}
 }
 \description{
 Clear any styles in the \code{tr_styles} field.
 
-Clear any styles in the \code{tr_styles} field, but only the ones specified.
+Clear any styles in the \code{tr_styles} field, but only the
+  ones specified.
 }

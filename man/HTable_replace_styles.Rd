@@ -3,11 +3,14 @@
 \name{HTable_replace_styles}
 \alias{HTable_replace_styles}
 \title{Replace the style of every <th> and <td> tag}
+\usage{
+obj$replace_styles(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Replace the style of every entry in the \code{styles} field. This is a
-character matrix of styles that represents the styles applied to each <th>
-and <td> tag.
+Replace the style of every entry in the \code{styles} field.
+  This is a character matrix of styles that represents the styles applied to
+  each <th> and <td> tag.
 }

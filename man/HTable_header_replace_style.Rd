@@ -3,9 +3,13 @@
 \name{HTable_header_replace_style}
 \alias{HTable_header_replace_style}
 \title{Replace the style of the header}
+\usage{
+obj$header_replace_style(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Replace the style of each <th> tag. Changes the \code{styles} field.
+Replace the style of each <th> tag. Changes the \code{styles}
+  field.
 }

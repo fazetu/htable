@@ -3,10 +3,14 @@
 \name{HTable_tr_styles_all_add}
 \alias{HTable_tr_styles_all_add}
 \title{Add styles to the <tr> tags}
+\usage{
+obj$tr_styles_all_add(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length \code{nrow(data) + 1} or 1) of styles
 to add. If of length 1 then the style will be added to all <tr> tags.}
 }
 \description{
-Add to the existing styles located in the \code{tr_styles} field.
+Add to the existing styles located in the \code{tr_styles}
+  field.
 }

@@ -3,6 +3,9 @@
 \name{HTable_tbody_style_replace}
 \alias{HTable_tbody_style_replace}
 \title{Replace the <tbody> tag style}
+\usage{
+obj$tbody_style_replace(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }

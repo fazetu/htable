@@ -3,8 +3,12 @@
 \name{HTable_clear_all_styles}
 \alias{HTable_clear_all_styles}
 \title{Clear the style of every HTML table tag}
+\usage{
+obj$clear_all_styles()
+}
 \description{
 Clear the style of the following fields: \code{table_style},
-\code{thead_style}, \code{tbody_style}, and each element of \code{tr_styles}.
-It also clears the style of every entry in the \code{styles} field.
+  \code{thead_style}, \code{tbody_style}, and each element of
+  \code{tr_styles}. It also clears the style of every entry in the
+  \code{styles} field.
 }

@@ -3,6 +3,9 @@
 \name{HTable_thead_style_clear}
 \alias{HTable_thead_style_clear}
 \title{Clear the <thead> tag style}
+\usage{
+obj$thead_style_clear()
+}
 \description{
 Clear any styles in the \code{thead_style} field.
 }

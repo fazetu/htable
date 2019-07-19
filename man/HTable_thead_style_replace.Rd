@@ -3,6 +3,9 @@
 \name{HTable_thead_style_replace}
 \alias{HTable_thead_style_replace}
 \title{Replace the <thead> tag style}
+\usage{
+obj$thead_style_replace(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }

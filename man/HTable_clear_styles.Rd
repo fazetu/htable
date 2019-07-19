@@ -3,8 +3,11 @@
 \name{HTable_clear_styles}
 \alias{HTable_clear_styles}
 \title{Clear the style of every <th> and <td> tag}
+\usage{
+obj$clear_styles()
+}
 \description{
-Clear the style of every entry in the \code{styles} field. This is a
-character matrix of styles that represents the styles applied to each <th>
-and <td> tag.
+Clear the style of every entry in the \code{styles} field. This
+  is a character matrix of styles that represents the styles applied to each
+  <th> and <td> tag.
 }

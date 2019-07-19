@@ -3,6 +3,9 @@
 \name{HTable_tr_styles_all_replace}
 \alias{HTable_tr_styles_all_replace}
 \title{Replace the <tr> tag styles}
+\usage{
+obj$tr_styles_all_replace(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length \code{nrow(data) + 1} or 1) of styles
 to add. If of length 1 then the style will be added to all <tr> tags.}

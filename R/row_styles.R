@@ -2,12 +2,11 @@
 NULL
 
 
-#' Add a style to a row
-#' 
-#' Add a style to each <td> and, optionally, <th> tag in a row. Changes the
-#' \code{styles} field.
-#' 
 #' @name HTable_row_add_style
+#' @title Add a style to a row
+#' @description Add a style to each <td> and, optionally, <th> tag in a row.
+#'   Changes the \code{styles} field.
+#' @usage obj$row_add_style(row = NULL, style = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param style Character vector (length 1) of style(s).
 #' @param include_header Boolean if \code{rows} should include the header as the
@@ -24,12 +23,12 @@ HTable$set("public", "row_add_style", function(row = NULL, style = NULL, include
   invisible(self)
 })
 
-#' Replace the style in a row
-#' 
-#' Replace the style of each <td> and, optionally, <th> tag in a row. Changes
-#' the \code{styles} field.
-#' 
 #' @name HTable_row_replace_style
+#' @title Replace the style in a row
+#' @description Replace the style of each <td> and, optionally, <th> tag in a
+#'   row. Changes the \code{styles} field.
+#' @usage obj$row_replace_style(row = NULL, style = NULL, include_header =
+#'   FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param style Character vector (length 1) of style(s).
 #' @param include_header Boolean if \code{rows} should include the header as the
@@ -46,48 +45,40 @@ HTable$set("public", "row_replace_style", function(row = NULL, style = NULL, inc
   invisible(self)
 })
 
-#' Clear the style in a row
-#' 
-#' Clear the style of each <td> and, optionally, <th> tag in a row. Changes
-#' the \code{styles} field.
-#' 
 #' @name HTable_row_clear_style
+#' @title Clear the style in a row 
+#' @description Clear the style of each <td> and, optionally, <th> tag in a row.
+#'   Changes the \code{styles} field.
+#' @usage obj$row_clear_style(row = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param style Character vector (length 1) of a style to use.
 #' @param include_header Boolean if \code{rows} should include the header as the
 #'   1st index. E.g. if \code{FALSE}, \code{row = 1} will target the first row,
 #'   but if \code{TRUE}, \code{row = 1} will target the header.
 HTable$set("public", "row_clear_style", function(row = NULL, include_header = FALSE) {
-  if (is.null(row)) return(invisible(self))
-  stopifnot(is.numeric(row))
-  
   self$row_replace_style(row = row, style = "", include_header = include_header)
   invisible(self)
 })
 
-#' Add a bold style to a row
-#' 
-#' Add a bold style to each <td> and, optionally, <th> tag in a row. Changes the
-#' \code{styles} field.
-#' 
 #' @name HTable_row_bold
+#' @title Add a bold style to a row
+#' @description Add a bold style to each <td> and, optionally, <th> tag in a
+#'   row. Changes the \code{styles} field.
+#' @usage obj$row_bold(row = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param include_header Boolean if \code{rows} should include the header as the
 #'   1st index. E.g. if \code{FALSE}, \code{row = 1} will target the first row,
 #'   but if \code{TRUE}, \code{row = 1} will target the header.
 HTable$set("public", "row_bold", function(row = NULL, include_header = FALSE) {
-  if (is.null(row)) return(invisible(self))
-  
   self$row_add_style(row = row, style = "font-weight:bold;", include_header = include_header)
   invisible(self)
 })
 
-#' Add an italic style to a row
-#' 
-#' Add an italic style to each <td> and, optionally, <th> tag in a row. Changes
-#' the \code{styles} field.
-#' 
 #' @name HTable_row_italic
+#' @title Add an italic style to a row
+#' @description Add an italic style to each <td> and, optionally, <th> tag in a
+#'   row. Changes the \code{styles} field.
+#' @usage obj$row_italic(row = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param include_header Boolean if \code{rows} should include the header as the
 #'   1st index. E.g. if \code{FALSE}, \code{row = 1} will target the first row,
@@ -99,12 +90,11 @@ HTable$set("public", "row_italic", function(row = NULL, include_header = FALSE) 
   invisible(self)
 })
 
-#' Add a background color style to a row
-#' 
-#' Add a background color style to each <td> and, optionally, <th> tag in a row.
-#' Changes the \code{styles} field.
-#' 
 #' @name HTable_row_bg_color
+#' @title Add a background color style to a row
+#' @description Add a background color style to each <td> and, optionally, <th>
+#'   tag in a row. Changes the \code{styles} field.
+#' @usage obj$row_bg_color(row = NULL, color = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param color Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
@@ -112,19 +102,18 @@ HTable$set("public", "row_italic", function(row = NULL, include_header = FALSE) 
 #'   1st index. E.g. if \code{FALSE}, \code{row = 1} will target the first row,
 #'   but if \code{TRUE}, \code{row = 1} will target the header.
 HTable$set("public", "row_bg_color", function(row = NULL, color = NULL, include_header = FALSE) {
-  if (is.null(row) | is.null(color)) return(invisible(self))
+  if (is.null(color)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   
   self$row_add_style(row = row, style = sprintf("background-color:%s;", color), include_header = include_header)
   invisible(self)
 })
 
-#' Add a text color style to a row
-#' 
-#' Add a text style to each <td> and, optionally, <th> tag in a row. Changes the
-#' \code{styles} field.
-#' 
 #' @name HTable_row_color
+#' @title Add a text color style to a row
+#' @description Add a text style to each <td> and, optionally, <th> tag in a
+#'   row. Changes the \code{styles} field.
+#' @usage obj$row_color(row = NULL, color = NULL, include_header = FALSE)
 #' @param row Numeric vector of which rows to target.
 #' @param color Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
@@ -132,20 +121,20 @@ HTable$set("public", "row_bg_color", function(row = NULL, color = NULL, include_
 #'   1st index. E.g. if \code{FALSE}, \code{row = 1} will target the first row,
 #'   but if \code{TRUE}, \code{row = 1} will target the header.
 HTable$set("public", "row_color", function(row = NULL, color = NULL, include_header = FALSE) {
-  if (is.null(row) | is.null(color)) return(invisible(self))
+  if (is.null(color)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   
   self$row_add_style(row = row, style = sprintf("color:%s;", color), include_header = include_header)
   invisible(self)
 })
 
-#' Add an alternating background color style to all rows
-#' 
-#' Add an alternating background color style to each <td> and, optionally, <th>
-#' tag. The odd rows get the background color \code{color1} and the evens get
-#' the background color \code{color2}. Changes the \code{styles} field.
-#' 
 #' @name HTable_row_alt_bg_color
+#' @title Add an alternating background color style to all rows
+#' @description Add an alternating background color style to each <td> and,
+#'   optionally, <th> tag. The odd rows get the background color \code{color1}
+#'   and the evens get the background color \code{color2}. Changes the
+#'   \code{styles} field.
+#' @usage obj$row_alt_bg_color(color1 = NULL, color2 = NULL, include_header = FALSE)
 #' @param color1 Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
 #' @param color2 Character vector (length 1) of an HTML color name, hex color
@@ -168,13 +157,13 @@ HTable$set("public", "row_alt_bg_color", function(color1 = NULL, color2 = NULL, 
   invisible(self)
 })
 
-#' Add an alternating text color style to all rows
-#' 
-#' Add an alternating text color style to each <td> and, optionally, <th> tag.
-#' The odd rows get the text color \code{color1} and the evens get the text
-#' color \code{color2}. Changes the \code{styles} field.
-#' 
 #' @name HTable_row_alt_color
+#' @title Add an alternating text color style to all rows
+#' @description Add an alternating text color style to each <td> and,
+#'   optionally, <th> tag. The odd rows get the text color \code{color1} and the
+#'   evens get the text color \code{color2}. Changes the \code{styles} field.
+#' @usage obj$row_alt_color(color1 = NULL, color2 = NULL, include_header =
+#'   FALSE)
 #' @param color1 Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
 #' @param color2 Character vector (length 1) of an HTML color name, hex color
@@ -200,72 +189,63 @@ HTable$set("public", "row_alt_color", function(color1 = NULL, color2 = NULL, inc
 
 ################################################################################
 
-
-#' Add a style to the header
-#' 
-#' Add a style to each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_add_style
+#' @title Add a style to the header
+#' @description Add a style to each <th> tag. Changes the \code{styles} field.
+#' @usage obj$header_add_style(style = NULL)
 #' @param style Character vector (length 1) of style(s).
 HTable$set("public", "header_add_style", function(style = NULL) {
-  if (is.null(style)) return(invisible(self))
-  stopifnot(is.character(style), length(style) == 1)
-  
   self$row_add_style(row = 1, style = style, include_header = TRUE)
   invisible(self)
 })
 
-#' Replace the style of the header
-#' 
-#' Replace the style of each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_replace_style
+#' @title Replace the style of the header
+#' @description Replace the style of each <th> tag. Changes the \code{styles}
+#'   field.
+#' @usage obj$header_replace_style(style = NULL)
 #' @param style Character vector (length 1) of style(s).
 HTable$set("public", "header_replace_style", function(style = NULL) {
-  if (is.null(style)) return(invisible(self))
-  stopifnot(is.character(style), length(style) == 1)
-  
   self$row_replace_style(row = 1, style = style, include_header = TRUE)
   invisible(self)
 })
 
-#' Clear the style of the header
-#' 
-#' Clear the style of each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_clear_style
+#' @title Clear the style of the header
+#' @description Clear the style of each <th> tag. Changes the \code{styles}
+#'   field.
+#' @usage obj$header_clear_style()
 #' @param style Character vector (length 1) of style(s).
 HTable$set("public", "header_clear_style", function() {
   self$row_clear_style(row = 1, include_header = TRUE)
   invisible(self)
 })
 
-#' Add a bold style to the header
-#' 
-#' Add a bold style to each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_bold
+#' @title Add a bold style to the header
+#' @description Add a bold style to each <th> tag. Changes the \code{styles}
+#'   field.
+#' @usage obj$header_bold()
 HTable$set("public", "header_bold", function() {
   self$header_add_style(style = "font-weight:bold;")
   invisible(self)
 })
 
-#' Add an italic style to the header
-#' 
-#' Add an italic style to each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_italic
+#' @title Add an italic style to the header
+#' @description Add an italic style to each <th> tag. Changes the \code{styles}
+#'   field.
+#' @usage obj$header_italic()
 HTable$set("public", "header_italic", function() {
   self$header_add_style(style = "font-style:italic;")
   invisible(self)
 })
 
-#' Add a background color style to the header
-#' 
-#' Add a background color style to each <th> tag. Changes the \code{styles}
-#' field.
-#' 
 #' @name HTable_header_bg_color
+#' @title Add a background color style to the header
+#' @description Add a background color style to each <th> tag. Changes the
+#'   \code{styles} field.
+#' @usage obj$header_bg_color(color = NULL)
 #' @param color Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
 HTable$set("public", "header_bg_color", function(color = NULL) {
@@ -276,11 +256,11 @@ HTable$set("public", "header_bg_color", function(color = NULL) {
   invisible(self)
 })
 
-#' Add a text color style to the header
-#' 
-#' Add a text color style to each <th> tag. Changes the \code{styles} field.
-#' 
 #' @name HTable_header_color
+#' @title Add a text color style to the header
+#' @description Add a text color style to each <th> tag. Changes the
+#'   \code{styles} field.
+#' @usage obj$header_color(color = NULL)
 #' @param color Character vector (length 1) of an HTML color name, hex color
 #'   code, or rgb color of the form rgb(x, y, z).
 HTable$set("public", "header_color", function(color = NULL) {

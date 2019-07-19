@@ -3,6 +3,9 @@
 \name{HTable_table_style_replace}
 \alias{HTable_table_style_replace}
 \title{Replace the <table> tag style}
+\usage{
+obj$table_style_replace(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }

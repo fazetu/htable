@@ -3,11 +3,15 @@
 \name{HTable_add_all_styles}
 \alias{HTable_add_all_styles}
 \title{Add a style to every HTML table tag}
+\usage{
+obj$add_all_styles(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Add a style to the following fields: \code{table_style}, \code{thead_style},
-\code{tbody_style}, and each element of \code{tr_styles}. It also add a style
-to every entry in the \code{styles} field.
+Add a style to the following fields: \code{table_style},
+  \code{thead_style}, \code{tbody_style}, and each element of
+  \code{tr_styles}. It also add a style to every entry in the \code{styles}
+  field.
 }

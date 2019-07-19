@@ -3,13 +3,16 @@
 \name{HTable_col_italic}
 \alias{HTable_col_italic}
 \title{Add an italic style to a column}
+\usage{
+obj$col_italic(col = NULL, include_header = FALSE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{include_header}{Boolean if the <th> tags in the columns should also be
 styled.}
 }
 \description{
-Add an italic style to each <td> and, optionally, <th> tag in a column.
-Changes the \code{styles} field.
+Add an italic style to each <td> and, optionally, <th> tag in a
+  column. Changes the \code{styles} field.
 }

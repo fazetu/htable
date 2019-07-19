@@ -3,6 +3,9 @@
 \name{HTable_row_clear_style}
 \alias{HTable_row_clear_style}
 \title{Clear the style in a row}
+\usage{
+obj$row_clear_style(row = NULL, include_header = FALSE)
+}
 \arguments{
 \item{row}{Numeric vector of which rows to target.}
 
@@ -13,6 +16,6 @@
 but if \code{TRUE}, \code{row = 1} will target the header.}
 }
 \description{
-Clear the style of each <td> and, optionally, <th> tag in a row. Changes
-the \code{styles} field.
+Clear the style of each <td> and, optionally, <th> tag in a row.
+  Changes the \code{styles} field.
 }

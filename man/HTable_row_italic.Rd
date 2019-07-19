@@ -3,6 +3,9 @@
 \name{HTable_row_italic}
 \alias{HTable_row_italic}
 \title{Add an italic style to a row}
+\usage{
+obj$row_italic(row = NULL, include_header = FALSE)
+}
 \arguments{
 \item{row}{Numeric vector of which rows to target.}
 
@@ -11,6 +14,6 @@
 but if \code{TRUE}, \code{row = 1} will target the header.}
 }
 \description{
-Add an italic style to each <td> and, optionally, <th> tag in a row. Changes
-the \code{styles} field.
+Add an italic style to each <td> and, optionally, <th> tag in a
+  row. Changes the \code{styles} field.
 }

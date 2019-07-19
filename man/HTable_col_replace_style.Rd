@@ -3,8 +3,11 @@
 \name{HTable_col_replace_style}
 \alias{HTable_col_replace_style}
 \title{Replace the style in a column}
+\usage{
+obj$col_replace_style(col = NULL, style = NULL, include_header = FALSE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{style}{Character vector (length 1) of style(s).}
 
@@ -12,6 +15,6 @@
 styled.}
 }
 \description{
-Replace the style of each <td> and, optionally, <th> tag in a column. Changes
-the \code{styles} field.
+Replace the style of each <td> and, optionally, <th> tag in a
+  column. Changes the \code{styles} field.
 }

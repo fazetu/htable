@@ -3,6 +3,10 @@
 \name{HTable_row_alt_color}
 \alias{HTable_row_alt_color}
 \title{Add an alternating text color style to all rows}
+\usage{
+obj$row_alt_color(color1 = NULL, color2 = NULL, include_header =
+  FALSE)
+}
 \arguments{
 \item{color1}{Character vector (length 1) of an HTML color name, hex color
 code, or rgb color of the form rgb(x, y, z).}
@@ -14,7 +18,7 @@ code, or rgb color of the form rgb(x, y, z).}
 color.}
 }
 \description{
-Add an alternating text color style to each <td> and, optionally, <th> tag.
-The odd rows get the text color \code{color1} and the evens get the text
-color \code{color2}. Changes the \code{styles} field.
+Add an alternating text color style to each <td> and,
+  optionally, <th> tag. The odd rows get the text color \code{color1} and the
+  evens get the text color \code{color2}. Changes the \code{styles} field.
 }

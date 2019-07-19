@@ -3,6 +3,9 @@
 \name{HTable_render}
 \alias{HTable_render}
 \title{Generate the HTML of the HTable object}
+\usage{
+obj$render()
+}
 \value{
 A length 1 character vector.
 }

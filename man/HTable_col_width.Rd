@@ -3,13 +3,16 @@
 \name{HTable_col_width}
 \alias{HTable_col_width}
 \title{Add a width style to a column}
+\usage{
+obj$col_width(col = NULL, width = NULL)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{width}{Character vector (length 1) of the width to use. Usually of the
 format "Npx" or "N\%".}
 }
 \description{
-Add a width style to each <td> and <th> tag in a column. Changes the
-\code{styles} field.
+Add a width style to each <td> and <th> tag in a column. Changes
+  the \code{styles} field.
 }

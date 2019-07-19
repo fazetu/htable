@@ -3,9 +3,13 @@
 \name{HTable_thead_style_add}
 \alias{HTable_thead_style_add}
 \title{Add a style to the <thead> tag}
+\usage{
+obj$thead_style_add(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }
 \description{
-Add to the existing styles located in the \code{thead_style} field.
+Add to the existing styles located in the \code{thead_style}
+  field.
 }

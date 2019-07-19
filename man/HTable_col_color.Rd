@@ -3,8 +3,11 @@
 \name{HTable_col_color}
 \alias{HTable_col_color}
 \title{Add a text color style to a column}
+\usage{
+obj$col_color(col = NULL, color = NULL, include_header = FALSE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{color}{Character vector (length 1) of an HTML color name, hex color
 code, or rgb color of the form rgb(x, y, z).}
@@ -13,6 +16,6 @@ code, or rgb color of the form rgb(x, y, z).}
 styled.}
 }
 \description{
-Add a text color style to each <td> and, optionally, <th> tag in a column.
-Changes the \code{styles} field.
+Add a text color style to each <td> and, optionally, <th> tag in
+  a column. Changes the \code{styles} field.
 }

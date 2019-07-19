@@ -90,9 +90,9 @@ HTable$set("public", "print", function(...) {
   invisible(self)
 })
 
-#' Generate the HTML of the HTable object
-#' 
 #' @name HTable_render
+#' @title Generate the HTML of the HTable object
+#' @usage obj$render()
 #' @return A length 1 character vector.
 HTable$set("public", "render", function() {
   ths <- tsc("th", self$styles[1, ], self$contents[1, ])
@@ -108,14 +108,14 @@ HTable$set("public", "render", function() {
   tsc("table", self$table_style, paste0(thead, tbody, collapse = ""))
 })
 
-#' Put an HTable into an RMarkdown Document
-#' 
 #' @name HTable_Rmd
+#' @title Put an HTable into an RMarkdown Document
+#' @usage obj$Rmd()
 HTable$set("public", "Rmd", function() cat(self$render()))
 
-#' View the HTable in the RStudio Viewer tab
-#' 
 #' @name HTable_View
+#' @title View the HTable in the RStudio Viewer tab
+#' @usage obj$View()
 HTable$set("public", "View", function() {
   tmp_dir <- tempfile()
   dir.create(tmp_dir)
@@ -124,9 +124,13 @@ HTable$set("public", "View", function() {
   rstudioapi::viewer(tmp_html)
 })
 
-#' Write the HTML for the HTable and write it to a file
-#' 
 #' @name HTable_writeLines
+#' @title Write the HTML for the HTable and write it to a file
+#' @usage obj$writeLines(con = stdout(), sep = "\n", useBytes = FALSE)
+#' @param con A connection object or character string. \code{\link{writeLines}}.
+#' @param sep character string. A string to be written to teh connection after
+#'   each line of text. \code{\link{writeLines}}.
+#' @param useBytes logical. \code{\link{writeLines}}.
 HTable$set("public", "writeLines", function(con = stdout(), sep = "\n", useBytes = FALSE) {
   writeLines(self$render(), con = con, sep = sep, useBytes = useBytes)
   invisible(self)

@@ -2,7 +2,12 @@
 % Please edit documentation in R/table_styles.R
 \name{HTable_tbody_style_clear}
 \alias{HTable_tbody_style_clear}
-\title{Clear the <tbody> tag style}
+\title{Clear the <tbody> tag style
+Clear any styles in the \code{tbody_style} field.}
+\usage{
+obj$tbody_style_clear()
+}
 \description{
+Clear the <tbody> tag style
 Clear any styles in the \code{tbody_style} field.
 }

@@ -3,6 +3,9 @@
 \name{HTable_row_alt_bg_color}
 \alias{HTable_row_alt_bg_color}
 \title{Add an alternating background color style to all rows}
+\usage{
+obj$row_alt_bg_color(color1 = NULL, color2 = NULL, include_header = FALSE)
+}
 \arguments{
 \item{color1}{Character vector (length 1) of an HTML color name, hex color
 code, or rgb color of the form rgb(x, y, z).}
@@ -14,7 +17,8 @@ code, or rgb color of the form rgb(x, y, z).}
 color.}
 }
 \description{
-Add an alternating background color style to each <td> and, optionally, <th>
-tag. The odd rows get the background color \code{color1} and the evens get
-the background color \code{color2}. Changes the \code{styles} field.
+Add an alternating background color style to each <td> and,
+  optionally, <th> tag. The odd rows get the background color \code{color1}
+  and the evens get the background color \code{color2}. Changes the
+  \code{styles} field.
 }

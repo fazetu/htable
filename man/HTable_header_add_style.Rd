@@ -3,6 +3,9 @@
 \name{HTable_header_add_style}
 \alias{HTable_header_add_style}
 \title{Add a style to the header}
+\usage{
+obj$header_add_style(style = NULL)
+}
 \arguments{
 \item{style}{Character vector (length 1) of style(s).}
 }

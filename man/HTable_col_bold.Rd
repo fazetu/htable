@@ -3,13 +3,16 @@
 \name{HTable_col_bold}
 \alias{HTable_col_bold}
 \title{Add a bold style to a column}
+\usage{
+obj$col_bold(col = NULL, include_header = FALSE)
+}
 \arguments{
-\item{col}{Numeric vector of which columns to target.}
+\item{col}{Numeric or character vector of which columns to target.}
 
 \item{include_header}{Boolean if the <th> tags in the columns should also be
 styled.}
 }
 \description{
-Add a bold style to each <td> and, optionally, <th> tag in a column. Changes
-the \code{styles} field.
+Add a bold style to each <td> and, optionally, <th> tag in a
+  column. Changes the \code{styles} field.
 }

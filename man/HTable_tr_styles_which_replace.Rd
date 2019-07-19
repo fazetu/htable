@@ -3,6 +3,9 @@
 \name{HTable_tr_styles_which_replace}
 \alias{HTable_tr_styles_which_replace}
 \title{Replace the <tr> tags styles at certain tags}
+\usage{
+obj$tr_styles_which_replace(which = NULL, style = NULL)
+}
 \arguments{
 \item{which}{Numeric vector of which <tr> tags to target.}
 
@@ -10,5 +13,6 @@
 \code{which}.}
 }
 \description{
-Overwrite the \code{tr_styles} field, but only the ones specified.
+Overwrite the \code{tr_styles} field, but only the ones
+  specified.
 }
