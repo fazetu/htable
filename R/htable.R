@@ -51,7 +51,7 @@ HTable$set("public", "initialize", function(x,
   stopifnot(is.character(tbody_style), length(tbody_style) == 1)
   stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) # + 1 because all <th>'s go in 1 <tr>
   
-  if (!is.null(rownames(x))) { # only care if it has rownames
+  if (!all(attr(x, "row.names") == 1:nrow(x))) { # only care if it has rownames
     handle_rownames <- match.arg(handle_rownames)
     
     if (handle_rownames == "drop") {
