@@ -3,6 +3,12 @@
 #' Create a reausable style specification. This makes it easier apply the same
 #' styling to multiple htables.
 #' 
+#' @param borders_line Passed into \code{borders}'s \code{line} argument. See \code{\link{HTable_borders}}.
+#' @param borders_width Passed into \code{borders}'s \code{width} argument. See \code{\link{HTable_borders}}.
+#' @param borders_color Passed into \code{borders}'s \code{color} argument. See \code{\link{HTable_borders}}.
+#' @param padding_padding Passed into \code{padding}'s \code{padding} argument. See \code{\link{HTable_padding}}.
+#' @param font_size_size Passed into \code{font_size}'s \code{size} argument. See \code{\link{HTable_font_size}}.
+#' @param font_family_font Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_family_font}}.
 #' @param col_add_style_col Passed into \code{col_add_style}'s \code{col} argument. See \code{\link{HTable_col_add_style}}.
 #' @param col_add_style_style Passed into \code{col_add_style}'s \code{style} argument. See \code{\link{HTable_col_add_style}}.
 #' @param col_add_style_include_header Passed into \code{col_add_style}'s \code{include_header} argument. See \code{\link{HTable_col_add_style}}.
@@ -52,6 +58,12 @@
 #' @return List of class "style_spec".
 #' @export
 style_spec <- function(
+  borders_line                       = NULL,
+  borders_width                      = NULL,
+  borders_color                      = NULL,
+  padding_padding                    = NULL,
+  font_size_size                     = NULL,
+  font_family_font                   = NULL,
   col_add_style_col                  = NULL,
   col_add_style_style                = NULL,
   col_add_style_include_header       = FALSE,
@@ -101,6 +113,12 @@ style_spec <- function(
 ) {
   structure(
     list(
+      borders_line                       = borders_line,
+      borders_width                      = borders_width,
+      borders_color                      = borders_color,
+      padding_padding                    = padding_padding,
+      font_size_size                     = font_size_size,
+      font_family_font                   = font_family_font,
       col_add_style_col                  = col_add_style_col,
       col_add_style_style                = col_add_style_style,
       col_add_style_include_header       = col_add_style_include_header,
@@ -152,6 +170,14 @@ style_spec <- function(
   )
 }
 
+HTable$set("private", "apply_style_spec_general", function(style_spec) {
+  self$borders(line = style_spec$borders_line, width = style_spec$borders_width, color = style_spec$borders_color)
+  self$padding(padding = style_spec$padding_padding)
+  self$font_size(size = style_spec$font_size_size)
+  self$font_family(font = style_spec$font_family_font)
+  invisible(self)
+})
+
 HTable$set("private", "apply_style_spec_col", function(style_spec) {
   self$col_add_style(col = style_spec$col_add_style_col, style = style_spec$col_add_style_style, include_header = style_spec$col_add_style_include_header)
   self$col_width(col = style_spec$col_width_col, width = style_spec$col_width_width)
@@ -165,6 +191,7 @@ HTable$set("private", "apply_style_spec_col", function(style_spec) {
   self$col_color_scale(col = style_spec$col_color_scale_col, color = style_spec$col_color_scale_color, exclude_rows = style_spec$col_color_scale_exclude_rows)
   self$col_data_bar(col = style_spec$col_data_bar_col, color = style_kspec$col_data_bar_color, exclude_rows = style_spec$col_data_bar_exclude_rows)
   self$col_centered_data_bar(col = style_spec$col_centered_data_bar_col, color1 = style_spec$col_centered_data_bar_color1, color2 = style_spec$col_centered_data_bar_color2, exclude_rows = style_spec$col_centered_data_bar_exclude_rows)
+  invisible(self)
 })
 
 HTable$set("private", "apply_style_spec_row", function(style_spec) {
@@ -175,6 +202,7 @@ HTable$set("private", "apply_style_spec_row", function(style_spec) {
   self$row_color(row = style_spec$row_color_row, color = style_spec$row_color_color, include_header = FALSE)
   self$row_alt_bg_color(color1 = style_spec$row_alt_bg_color_color1, color2 = style_spec$row_alt_bg_color_color2, include_header = FALSE)
   self$row_alt_color(color1 = style_spec$row_alt_color_color1, color2 = style_spec$row_alt_color_color2, include_header = FALSE)
+  invisible(self)
 })
 
 HTable$set("private", "apply_style_spec_header", function(style_spec) {
@@ -183,6 +211,7 @@ HTable$set("private", "apply_style_spec_header", function(style_spec) {
   self$header_add_style(style = style_spec$header_add_style_style)
   self$header_bg_color(color = style_spec$header_bg_color_color)
   self$header_color(color = style_spec$header_color_color)
+  invisible(self)
 })
 
 #' @name HTable_apply_style_spec
@@ -224,6 +253,8 @@ HTable$set("public", "apply_style_spec", function(style_spec = NULL, order = c("
     "column" = private$apply_style_spec_col(style_spec),
     "header" = private$apply_style_spec_header(style_spec)
   )
+  
+  private$apply_style_spec_general(style_spec)
   
   invisible(self)
 })

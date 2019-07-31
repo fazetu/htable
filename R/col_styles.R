@@ -4,31 +4,9 @@ NULL
 
 # this should always return a column index
 HTable$set("private", "col_name_index", function(col) {
-  col_sub <- substitute(col, sys.frame(1))
-  
-  switch(
-    class(col_sub),
-    "NULL" = NULL,
-    "integer" = col,
-    "numeric" = col,
-    "character" = which(colnames(self$data) %in% col),
-    "name" = which(colnames(self$data) %in% as.character(col_sub)),
-    "call" = {
-      try_eval <- tryCatch(eval(col_sub), warning = function(w) col_sub, error = function(e) col_sub)
-      switch(
-        class(try_eval),
-        "integer" = try_eval,
-        "numeric" = try_eval,
-        "character" = which(colnames(self$data) %in% try_eval),
-        "call" = {
-          col_call <- as.character(try_eval)
-          if (col_call[1] == "c") which(colnames(self$data) %in% col_call[-1])
-        },
-        NULL
-      )
-    },
-    NULL
-  )
+  if (is.numeric(col) | is.null(col)) col
+  else if (is.character(col)) which(colnames(self$data) %in% col)
+  else NULL
 })
 
 #' @name HTable_col_add_style

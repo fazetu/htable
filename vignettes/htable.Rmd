@@ -78,6 +78,12 @@ ht$View()
 ht$col_pct_fmt(6)
 ht$col_comma_fmt(7)
 ht$col_dollar_fmt(8)
+ht$reset() # more on this later
+
+# can also select columns (only) by name
+ht$col_pct_fmt("Pct")
+ht$col_comma_fmt("Big")
+ht$col_dollar_fmt("Money")
 ```
 
 Since `ht` is a reference class object each formatting operation is done in place.
@@ -93,12 +99,12 @@ These operations change the `contents` field of `ht`. This matrix is what is use
 This demonstrates many of the available column styles. All available column stylings start with the prefix "col_".
 
 ```{r, results="asis"}
-ht$col_bg_color(1, "red", include_header = TRUE)
-ht$col_color(1, "white", include_header = TRUE)
-ht$col_bold(2)
-ht$col_italic(3)
+ht$col_color(1, "red", include_header = TRUE)
+ht$col_bold(1)
+ht$col_italic(2)
 ht$col_color_scale(6)
 ht$col_data_bar(8)
+#ht$col_centered_data_bar(8) # this is also available but seems to only work when written to html file
 ht$Rmd()
 ```
 
@@ -123,6 +129,12 @@ ht$Rmd()
 ```
 
 This resets the `contents` field of `ht`.
+
+To start over (basically using `htable(ex)`) and reset both styles and contents:
+
+```{r, results="asis"}
+ht$reset()
+```
 
 ## Style rows
 

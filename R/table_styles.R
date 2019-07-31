@@ -264,7 +264,7 @@ HTable$set("public", "replace_all_styles", function(style = NULL) {
   
   self$table_style <- style
   self$thead_style <- style
-  self$tbody_styles <- style
+  self$tbody_style <- style
   self$tr_styles <- rep(style, length(self$tr_styles))
   self$replace_styles(style = style)
   invisible(self)
@@ -306,5 +306,72 @@ HTable$set("public", "reset_contents", function() {
     do.call("cbind", lapply(x, function(col) tsc("div", "", col)))
   )
   self$contents <- contents
+  invisible(self)
+})
+
+#' @name HTable_reset
+#' @title Reset the htable of all styles and contents
+#' @description  Reset the htable of all styles and contents.
+#' @usage obj$reset()
+HTable$set("public", "reset", function() {
+  self$clear_all_styles()
+  self$reset_contents()
+  self$table_style_replace("margin-left:auto;margin-right:auto;") # add back in because clear_all_styles clears it
+  invisible(self)
+})
+
+#' @name HTable_borders
+#' @title Add borders to the table
+#' @description Add borders around all cells.
+#' @param line Character vector (length 1) of line type to use for the borders.
+#' @param width Character vector (length 1) of border width. Usually in the
+#'   format, "Npx".
+#' @param color Character vector (length 1) of border color.
+#' @usage obj$borders()
+HTable$set("public", "borders", function(line = "solid", width = "1px", color = "black") {
+  if (is.null(line) | is.null(width) | is.null(color)) return(invisible(self))
+  stopifnot(is.character(line), length(line) == 1)
+  stopifnot(is.character(width), length(width) == 1)
+  stopifnot(is.character(color), length(color) == 1)
+  self$add_styles(sprintf("border:%s %s %s", width, line, color))
+  self$table_style_add("border-collapse:collapse;")
+  invisible(self)
+})
+
+#' @name HTable_padding
+#' @title Add padding to the table
+#' @description Add padding to all cells.
+#' @param padding Character vector (length 1) of padding distance. Usually in
+#'   the format, "Npx".
+#' @usage obj$padding()
+HTable$set("public", "padding", function(padding = "5px") {
+  if (is.null(padding)) return(invisible(self))
+  stopifnot(is.character(padding), length(padding) == 1)
+  self$add_styles(sprintf("padding:%s;", padding))
+  invisible(self)
+})
+
+#' @name HTable_font_size
+#' @title Change the font size
+#' @description Change the font size of all cells.
+#' @param size Character vector (length 1) of font size. Usually in the format,
+#'   "Npt".
+#' @usage obj$font_size()
+HTable$set("public", "font_size", function(size = "12pt") {
+  if (is.null(size)) return(invisible(self))
+  stopifnot(is.character(size), length(size) == 1)
+  self$add_styles(sprintf("font-size:%s", size))
+  invisible(self)
+})
+
+#' @name HTable_font_family
+#' @title Change the font family
+#' @description Change the font family of all cells.
+#' @param size Character vector (length 1) of font family.
+#' @usage obj$font_family()
+HTable$set("public", "font_family", function(font = "arial") {
+  if (is.null(font)) return(invisible(self))
+  stopifnot(is.character(font), length(font) == 1)
+  self$add_styles(sprintf("font-family:%s", font))
   invisible(self)
 })
