@@ -8,7 +8,7 @@
 #' @param borders_color Passed into \code{borders}'s \code{color} argument. See \code{\link{HTable_borders}}.
 #' @param padding_padding Passed into \code{padding}'s \code{padding} argument. See \code{\link{HTable_padding}}.
 #' @param font_size_size Passed into \code{font_size}'s \code{size} argument. See \code{\link{HTable_font_size}}.
-#' @param font_family_font Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_family_font}}.
+#' @param font_family_font Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_font_family}}.
 #' @param col_add_style_col Passed into \code{col_add_style}'s \code{col} argument. See \code{\link{HTable_col_add_style}}.
 #' @param col_add_style_style Passed into \code{col_add_style}'s \code{style} argument. See \code{\link{HTable_col_add_style}}.
 #' @param col_add_style_include_header Passed into \code{col_add_style}'s \code{include_header} argument. See \code{\link{HTable_col_add_style}}.
@@ -189,7 +189,7 @@ HTable$set("private", "apply_style_spec_col", function(style_spec) {
   self$col_comma_fmt(col = style_spec$col_comma_fmt_col)
   self$col_dollar_fmt(col = style_spec$col_dollar_fmt_col)
   self$col_color_scale(col = style_spec$col_color_scale_col, color = style_spec$col_color_scale_color, exclude_rows = style_spec$col_color_scale_exclude_rows)
-  self$col_data_bar(col = style_spec$col_data_bar_col, color = style_kspec$col_data_bar_color, exclude_rows = style_spec$col_data_bar_exclude_rows)
+  self$col_data_bar(col = style_spec$col_data_bar_col, color = style_spec$col_data_bar_color, exclude_rows = style_spec$col_data_bar_exclude_rows)
   self$col_centered_data_bar(col = style_spec$col_centered_data_bar_col, color1 = style_spec$col_centered_data_bar_color1, color2 = style_spec$col_centered_data_bar_color2, exclude_rows = style_spec$col_centered_data_bar_exclude_rows)
   invisible(self)
 })

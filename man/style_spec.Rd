@@ -44,7 +44,7 @@ style_spec(borders_line = NULL, borders_width = NULL,
 
 \item{font_size_size}{Passed into \code{font_size}'s \code{size} argument. See \code{\link{HTable_font_size}}.}
 
-\item{font_family_font}{Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_family_font}}.}
+\item{font_family_font}{Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_font_family}}.}
 
 \item{col_add_style_col}{Passed into \code{col_add_style}'s \code{col} argument. See \code{\link{HTable_col_add_style}}.}
 
