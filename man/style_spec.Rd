@@ -4,7 +4,10 @@
 \alias{style_spec}
 \title{Create a style specification}
 \usage{
-style_spec(col_add_style_col = NULL, col_add_style_style = NULL,
+style_spec(borders_line = NULL, borders_width = NULL,
+  borders_color = NULL, padding_padding = NULL,
+  font_size_size = NULL, font_family_font = NULL,
+  col_add_style_col = NULL, col_add_style_style = NULL,
   col_add_style_include_header = FALSE, col_width_col = NULL,
   col_width_width = NULL, col_bold_col = NULL,
   col_bold_include_header = FALSE, col_italic_col = NULL,
@@ -31,6 +34,18 @@ style_spec(col_add_style_col = NULL, col_add_style_style = NULL,
   header_bg_color_color = NULL, header_color_color = NULL)
 }
 \arguments{
+\item{borders_line}{Passed into \code{borders}'s \code{line} argument. See \code{\link{HTable_borders}}.}
+
+\item{borders_width}{Passed into \code{borders}'s \code{width} argument. See \code{\link{HTable_borders}}.}
+
+\item{borders_color}{Passed into \code{borders}'s \code{color} argument. See \code{\link{HTable_borders}}.}
+
+\item{padding_padding}{Passed into \code{padding}'s \code{padding} argument. See \code{\link{HTable_padding}}.}
+
+\item{font_size_size}{Passed into \code{font_size}'s \code{size} argument. See \code{\link{HTable_font_size}}.}
+
+\item{font_family_font}{Passed into \code{font_family}'s \code{font} argument. See \code{\link{HTable_family_font}}.}
+
 \item{col_add_style_col}{Passed into \code{col_add_style}'s \code{col} argument. See \code{\link{HTable_col_add_style}}.}
 
 \item{col_add_style_style}{Passed into \code{col_add_style}'s \code{style} argument. See \code{\link{HTable_col_add_style}}.}

@@ -166,7 +166,7 @@ style_spec <- function(
       header_bg_color_color              = header_bg_color_color,
       header_color_color                 = header_color_color
     ),
-    class = "style_spec"
+    class = c("style_spec", "list")
   )
 }
 
