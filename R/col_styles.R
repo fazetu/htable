@@ -72,6 +72,7 @@ HTable$set("public", "col_clear_style", function(col = NULL, include_header = FA
 #' @param width Character vector (length 1) of the width to use. Usually of the
 #'   format "Npx" or "N\%".
 HTable$set("public", "col_width", function(col = NULL, width = NULL) {
+  if (is.null(width)) return(invisible(self))
   stopifnot(is.character(width), length(width) == 1)
   self$col_add_style(col = col, style = sprintf("width:%s;", width), include_header = TRUE)
   invisible(self)
