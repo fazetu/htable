@@ -19,7 +19,6 @@ Collate:
     'row_styles.R'
     'style_spec.R'
     'table_styles.R'
-    'tag.R'
 Suggests: 
     knitr,
     rmarkdown
