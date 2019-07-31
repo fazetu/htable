@@ -17,6 +17,7 @@ Collate:
     'col_styles.R'
     'import.R'
     'row_styles.R'
+    'style_spec.R'
     'table_styles.R'
     'tag.R'
 Suggests: 

@@ -2,4 +2,5 @@
 
 export(HTable)
 export(htable)
+export(style_spec)
 import(R6)
