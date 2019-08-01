@@ -15,11 +15,13 @@ Collate:
     'htable.R'
     'cell_styles.R'
     'col_styles.R'
+    'combine_style_specs.R'
     'import.R'
     'row_styles.R'
     'style_spec.R'
     'table_styles.R'
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 2.1.0)
 VignetteBuilder: knitr
