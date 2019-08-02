@@ -8,7 +8,7 @@ c_or_1st <- function(a, b) {
   if (is.null(a) & !is.null(b)) return(b)
   
   # otherwise do different things based on class
-  if (is.logical(a) & is.logical(b)) return(a | b)
+  if (is.logical(a) & is.logical(b)) return(a) # should this be just a or a | b?
   if (is.numeric(a) & is.numeric(b)) return(unique(c(a, b)))
   if (is.character(a) & is.character(b)) return(a)
 

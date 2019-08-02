@@ -13,7 +13,7 @@ test_that("test c_or_1st()", {
   # logicals
   expect_equal(c_or_1st(TRUE, TRUE), TRUE)
   expect_equal(c_or_1st(TRUE, FALSE), TRUE)
-  expect_equal(c_or_1st(FALSE, TRUE), TRUE)
+  expect_equal(c_or_1st(FALSE, TRUE), FALSE)
   expect_equal(c_or_1st(FALSE, FALSE), FALSE)
   
   # numerics
