@@ -119,11 +119,7 @@ HTable$set("public", "print", function(...) {
   invisible(self)
 })
 
-#' @name HTable_render
-#' @title Generate the HTML of the HTable object
-#' @usage obj$render()
-#' @return A length 1 character vector.
-HTable$set("public", "render", function() {
+HTable$set("private", "render_html", function() {
   ths <- tsc("th", self$styles[1, ], self$contents[1, ])
   tds <- lapply(2:nrow(self$contents), function(i) tsc("td", self$styles[i, ], self$contents[i, ]))
   
@@ -137,10 +133,46 @@ HTable$set("public", "render", function() {
   tsc("table", self$table_style, paste0(thead, tbody, collapse = ""))
 })
 
+md_table_row <- function(row_vals) {
+  mid <- paste0(row_vals, collapse = " | ")
+  paste0("| ", mid, " |")
+}
+
+HTable$set("private", "render_markdown", function() {
+  header <- md_table_row(names(self$data))
+  subheader <- paste0("|", paste0(rep(":---", ncol(self$data)), collapse = "|"), "|")
+  rows <- vapply(1:nrow(self$data), function(r) {
+    row <- as.character(self$data[r, ])
+    md_table_row(row)
+  }, character(1))
+  
+  paste0(c(header, subheader, rows), collapse = "\n")
+})
+
+#' @name HTable_render
+#' @title Generate the HTML of the HTable object
+#' @param type Render either an HTML or Markdown table.
+#' @usage obj$render("html")
+#' @return A length 1 character vector.
+HTable$set("public", "render", function(type = c("html", "markdown")) {
+  type <- match.arg(type)
+  
+  if (type == "html") {
+    private$render_html()
+  } else if (type == "markdown") {
+    private$render_markdown()
+  }
+})
+
 #' @name HTable_Rmd
 #' @title Put an HTable into an RMarkdown Document
+#' @description For use in an R Markdown document inside of a chunk with the
+#'   option \code{results='asis'}.
+#' @param type Include either an HTML or Markdown table.
 #' @usage obj$Rmd()
-HTable$set("public", "Rmd", function() cat(self$render()))
+HTable$set("public", "Rmd", function(type = c("html", "markdown")) {
+  cat(self$render(type = match.arg(type)))
+})
 
 #' @name HTable_View
 #' @title View the HTable in the RStudio Viewer tab

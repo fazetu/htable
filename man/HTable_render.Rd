@@ -4,7 +4,10 @@
 \alias{HTable_render}
 \title{Generate the HTML of the HTable object}
 \usage{
-obj$render()
+obj$render("html")
+}
+\arguments{
+\item{type}{Render either an HTML or Markdown table.}
 }
 \value{
 A length 1 character vector.

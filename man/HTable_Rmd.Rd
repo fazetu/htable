@@ -6,6 +6,10 @@
 \usage{
 obj$Rmd()
 }
+\arguments{
+\item{type}{Include either an HTML or Markdown table.}
+}
 \description{
-Put an HTable into an RMarkdown Document
+For use in an R Markdown document inside of a chunk with the
+  option \code{results='asis'}.
 }
