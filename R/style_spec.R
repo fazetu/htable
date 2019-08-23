@@ -55,6 +55,10 @@
 #' @param header_italic_flag Boolean if \code{header_italic} should be run. See \code{\link{HTable_header_italic}}.
 #' @param header_bg_color_color Passed into \code{header_bg_color}'s \code{color} argument. See \code{\link{HTable_header_bg_color}}.
 #' @param header_color_color Passed into \code{header_color}'s \code{color} argument. See \code{\link{HTable_header_color}}.
+#' @param div_x_scroll_flag Boolean if \code{div_x_scroll} should be run. See \code{\link{HTable_div_x_scroll}}.
+#' @param div_y_scroll_flag Boolean if \code{div_y_scroll} should be run. See \code{\link{HTable_div_y_scroll}}.
+#' @param div_max_width_width Passed into \code{div_max_width}'s \code{width} argument. See \code{\link{HTable_div_max_width}}.
+#' @param div_max_height_height Passed into \code{div_max_height}'s \code{height} argument. See \code{\link{HTable_div_max_height}}.
 #' @return List of class "style_spec".
 #' @export
 style_spec <- function(
@@ -109,7 +113,11 @@ style_spec <- function(
   header_bold_flag                   = FALSE,
   header_italic_flag                 = FALSE,
   header_bg_color_color              = NULL,
-  header_color_color                 = NULL
+  header_color_color                 = NULL,
+  div_x_scroll_flag                  = TRUE,
+  div_y_scroll_flag                  = FALSE,
+  div_max_width_width                = NULL,
+  div_max_height_height              = NULL
 ) {
   structure(
     list(
@@ -164,7 +172,11 @@ style_spec <- function(
       header_bold_flag                   = header_bold_flag,
       header_italic_flag                 = header_italic_flag,
       header_bg_color_color              = header_bg_color_color,
-      header_color_color                 = header_color_color
+      header_color_color                 = header_color_color,
+      div_x_scroll_flag                  = div_x_scroll_flag,
+      div_y_scroll_flag                  = div_x_scroll_flag,
+      div_max_width_width                = div_max_width_width,
+      div_max_height_height              = div_max_height_height
     ),
     class = c("style_spec", "list")
   )
@@ -175,6 +187,10 @@ HTable$set("private", "apply_style_spec_general", function(style_spec) {
   self$padding(padding = style_spec$padding_padding)
   self$font_size(size = style_spec$font_size_size)
   self$font_family(font = style_spec$font_family_font)
+  if (style_spec$div_x_scroll_flag) self$div_x_scroll()
+  if (style_spec$div_y_scroll_flag) self$div_y_scroll()
+  self$div_max_width(width = style_spec$div_max_width_width)
+  self$div_max_height(height = style_spec$div_max_height_height)
   invisible(self)
 })
 

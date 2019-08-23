@@ -31,7 +31,9 @@ style_spec(borders_line = NULL, borders_width = NULL,
   row_alt_bg_color_color2 = NULL, row_alt_color_color1 = NULL,
   row_alt_color_color2 = NULL, header_add_style_style = NULL,
   header_bold_flag = FALSE, header_italic_flag = FALSE,
-  header_bg_color_color = NULL, header_color_color = NULL)
+  header_bg_color_color = NULL, header_color_color = NULL,
+  div_x_scroll_flag = TRUE, div_y_scroll_flag = FALSE,
+  div_max_width_width = NULL, div_max_height_height = NULL)
 }
 \arguments{
 \item{borders_line}{Passed into \code{borders}'s \code{line} argument. See \code{\link{HTable_borders}}.}
@@ -137,6 +139,14 @@ style_spec(borders_line = NULL, borders_width = NULL,
 \item{header_bg_color_color}{Passed into \code{header_bg_color}'s \code{color} argument. See \code{\link{HTable_header_bg_color}}.}
 
 \item{header_color_color}{Passed into \code{header_color}'s \code{color} argument. See \code{\link{HTable_header_color}}.}
+
+\item{div_x_scroll_flag}{Boolean if \code{div_x_scroll} should be run. See \code{\link{HTable_div_x_scroll}}.}
+
+\item{div_y_scroll_flag}{Boolean if \code{div_y_scroll} should be run. See \code{\link{HTable_div_y_scroll}}.}
+
+\item{div_max_width_width}{Passed into \code{div_max_width}'s \code{width} argument. See \code{\link{HTable_div_max_width}}.}
+
+\item{div_max_height_height}{Passed into \code{div_max_height}'s \code{height} argument. See \code{\link{HTable_div_max_height}}.}
 }
 \value{
 List of class "style_spec".

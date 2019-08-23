@@ -15,9 +15,6 @@ code, or rgb color of the form rgb(x, y, z). Used to color the data bars.}
 
 \item{exclude_rows}{Numeric vector of which rows to exclude from calculation
 and styling.}
-
-\item{na.rm}{Boolean if \code{NA}'s should be removed when scaling the data
-bars.}
 }
 \description{
 Change numeric column(s) to have a colored data bar element in

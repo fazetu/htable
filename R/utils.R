@@ -5,6 +5,17 @@ tsc <- function(tag, style, content) { # tsc = tag, style, content
   }, tag, style, content, USE.NAMES = FALSE)
 }
 
+# using this one now:
+ticsc <- function(tag, id = "", class = "", style = "", content = "") { # ticsc = tag, id, class, style, content
+  mapply(function(t, i, cl, s, cont) {
+    id_fill <- ifelse(i == "", "", sprintf(" id='%s' ", i))
+    class_fill <- ifelse(cl == "", "", sprintf(" class='%s' ", cl))
+    style_fill <- ifelse(s == "", "", sprintf(" style='%s'", s))
+    
+    sprintf("<%s%s%s%s>%s</%s>", t, id_fill, class_fill, style_fill, cont, t)
+  }, tag, id, class, style, content, USE.NAMES = FALSE)
+}
+
 add_style <- function(curr_styles, new_styles) {
   new_styles_splt <- lapply(strsplit(new_styles, ";"), paste0, ";") # add back on semi-colon
   curr_styles_splt <- lapply(strsplit(curr_styles, ";"), function(stl) {
@@ -57,4 +68,12 @@ tag_replace_content <- function(html, content) {
   open_tag <- gsub("(<.*>).*</.*>", "\\1", html)
   close_tag <- gsub("<.*>.*(</.*>)", "\\1", html)
   sprintf("%s%s%s", open_tag, content, close_tag)
+}
+
+pct_width <- function(x) {
+  mx <- max(abs(x), na.rm = TRUE)
+  f <- is.na(x) | x == 0 # problems for finding the width of
+  width <- x / mx * 100
+  width[f] <- 0
+  width
 }

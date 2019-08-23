@@ -262,9 +262,7 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
 #'   code, or rgb color of the form rgb(x, y, z). Used to color the data bars.
 #' @param exclude_rows Numeric vector of which rows to exclude from calculation
 #'   and styling.
-#' @param na.rm Boolean if \code{NA}'s should be removed when scaling the data
-#'   bars.
-HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", exclude_rows = NULL, na.rm = TRUE) {
+HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", exclude_rows = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
@@ -283,9 +281,8 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
 
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
+    width <- pct_width(x)
     color[is.na(x)] <- "inherit"
-    width <- (x / max(abs(x), na.rm = na.rm)) * 100
-    width[is.na(x)] <- 0
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
     bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:4px;padding-right:2px;background-color:%s;width:%.2f%%;",
                           color, abs(width))
@@ -311,9 +308,7 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
 #'   for the negative values.
 #' @param exclude_rows Numeric vector of which rows to exclude from calculation
 #'   and styling.
-#' @param na.rm Boolean if \code{NA}'s should be removed when scaling the data
-#'   bars.
-HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lightgreen", color2 = "pink", exclude_rows = NULL, na.rm = TRUE) {
+HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lightgreen", color2 = "pink", exclude_rows = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color1), length(color1) == 1)
@@ -334,9 +329,8 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
   
   for (c in col) {
     x <- self$data[-data_exclude_rows, c]
+    width <- pct_width(x)
     lg <- vector("character", length(x)) # background linear gradients
-    width <- (x / max(abs(x), na.rm = na.rm)) * 100
-    width[is.na(x)] <- 0
     
     # negative-side bars
     neg_dist_center <- 50 - (abs(width) * 0.5)

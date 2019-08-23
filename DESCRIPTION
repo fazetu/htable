@@ -16,6 +16,7 @@ Collate:
     'cell_styles.R'
     'col_styles.R'
     'combine_style_specs.R'
+    'div_styles.R'
     'import.R'
     'row_styles.R'
     'style_spec.R'
