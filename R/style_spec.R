@@ -114,7 +114,7 @@ style_spec <- function(
   header_italic_flag                 = FALSE,
   header_bg_color_color              = NULL,
   header_color_color                 = NULL,
-  div_x_scroll_flag                  = TRUE,
+  div_x_scroll_flag                  = FALSE,
   div_y_scroll_flag                  = FALSE,
   div_max_width_width                = NULL,
   div_max_height_height              = NULL

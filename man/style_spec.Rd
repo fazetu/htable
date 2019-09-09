@@ -32,7 +32,7 @@ style_spec(borders_line = NULL, borders_width = NULL,
   row_alt_color_color2 = NULL, header_add_style_style = NULL,
   header_bold_flag = FALSE, header_italic_flag = FALSE,
   header_bg_color_color = NULL, header_color_color = NULL,
-  div_x_scroll_flag = TRUE, div_y_scroll_flag = FALSE,
+  div_x_scroll_flag = FALSE, div_y_scroll_flag = FALSE,
   div_max_width_width = NULL, div_max_height_height = NULL)
 }
 \arguments{

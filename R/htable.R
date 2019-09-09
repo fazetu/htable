@@ -29,16 +29,18 @@ NULL
 #' @field tr_styles A character vector (length \code{nrow(data) + 1}) that
 #'   determines the style of each <tr> tag. Each element should always have as
 #'   few spaces as possible and all styles should end in a semi-colon.
-#' @field id  A character vector (length 1) that is used as the id attribute for
-#'   either the overall <table> tag (if \code{in_div = FALSE}) or the overall
-#'   <div> tag (if \code{in_div = TRUE}).
-#' @field class A character vector (length 1) that is used as the class
-#'   attribute for either the overall <table> tag (if \code{in_div = FALSE}) or
-#'   the overall <div> tag (if \code{in_div = TRUE}).
 #' @field in_div A boolean indicator if the HTable should be wrapped in a <div>
 #'   container.
 #' @field div_style A character vector (length 1) that is used to style the
 #'   <div> container if \code{in_div = TRUE}.
+#' @field table_id A character vector (length 1) that is used as the id
+#'   attribute for the <table> tag.
+#' @field table_id A character vector (length 1) that is used as the class
+#'   attribute for the <table> tag.
+#' @field div_id  A character vector (length 1) that is used as the id attribute
+#'   for the <div> tag (if \code{in_div = TRUE}).
+#' @field div_class A character vector (length 1) that is used as the class
+#'   attribute <div> tag (if \code{in_div = TRUE}).
 #' @export
 HTable <- R6Class("HTable")
 
@@ -49,24 +51,32 @@ HTable$set("public", "table_style", "")
 HTable$set("public", "thead_style", "")
 HTable$set("public", "tbody_style", "")
 HTable$set("public", "tr_styles", "")
-HTable$set("public", "id", "")
-HTable$set("public", "class", "")
 HTable$set("public", "in_div", FALSE)
 HTable$set("public", "div_style", "")
+HTable$set("public", "table_id", "")
+HTable$set("public", "table_class", "")
+HTable$set("public", "div_id", "")
+HTable$set("public", "div_class", "")
 
 HTable$set("public", "initialize", function(x,
                                             handle_rownames = c("drop", "add_first", "add_last"),
                                             rownames_col_name = "RowNames",
-                                            table_style = "margin-left:auto;margin-right:auto;",
+                                            table_style = "",
                                             thead_style = "", tbody_style = "",
                                             tr_styles = rep("", nrow(x) + 1),
-                                            id = "", class = "",
-                                            in_div = FALSE, div_style = "") {
+                                            in_div = FALSE, div_style = "",
+                                            table_id = "", table_class = "",
+                                            div_id = "", div_class = "") {
   stopifnot(is.character(table_style), length(table_style) == 1)
   stopifnot(is.character(thead_style), length(thead_style) == 1)
   stopifnot(is.character(tbody_style), length(tbody_style) == 1)
   stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) # + 1 because all <th>'s go in 1 <tr>
   stopifnot(is.character(div_style), length(div_style) == 1)
+  
+  stopifnot(is.character(table_id), length(table_id) == 1)
+  stopifnot(is.character(table_class), length(table_class) == 1)
+  stopifnot(is.character(div_id), length(div_id) == 1)
+  stopifnot(is.character(div_class), length(div_class) == 1)
   
   if (!all(attr(x, "row.names") == 1:nrow(x))) { # only care if it has rownames
     handle_rownames <- match.arg(handle_rownames)
@@ -100,10 +110,12 @@ HTable$set("public", "initialize", function(x,
   self$thead_style <- thead_style
   self$tbody_style <- tbody_style
   self$tr_styles <- tr_styles
-  self$id <- id
-  self$class <- class
   self$in_div <- in_div
   self$div_style <- div_style
+  self$table_id <- table_id
+  self$table_class <- table_class
+  self$div_id <- div_id
+  self$div_class <- div_class
 })
 
 #' Create a new HTable object
@@ -136,16 +148,19 @@ HTable$set("public", "initialize", function(x,
 #' @export
 htable <- function(x, handle_rownames = c("drop", "add_first", "add_last"),
                    rownames_col_name = "RowNames",
-                   table_style = "margin-left:auto;margin-right:auto;",
+                   table_style = "",
                    thead_style = "", tbody_style = "",
                    tr_styles = rep("", nrow(x) + 1),
-                   id = "", class = "",
-                   in_div = FALSE, div_style = "") {
+                   in_div = FALSE, div_style = "",
+                   table_id = "", table_class = "",
+                   div_id = "", div_class = "") {
   HTable$new(x = x, handle_rownames = match.arg(handle_rownames),
              rownames_col_name = rownames_col_name, table_style = table_style,
              thead_style = thead_style, tbody_style = tbody_style,
              tr_styles = tr_styles,
-             id = id, class = class, in_div = in_div, div_style = div_style)
+             in_div = in_div, div_style = div_style,
+             table_id = table_id, table_class = table_class,
+             div_id = div_id, div_class = div_class)
 }
 
 HTable$set("public", "print", function(...) {
@@ -163,13 +178,13 @@ HTable$set("private", "render_html", function() {
   thead <- ticsc(tag = "thead", style = self$thead_style, content = tr_ths)
   tbody <- ticsc(tag = "tbody", style = self$tbody_style, content = paste0(tr_tds, collapse = ""))
   
-  # does not return self invisibly
+  table <- ticsc(tag = "table", id = self$table_id, class = self$table_class, style = self$table_style, content = paste0(thead, tbody, collapse = ""))
   if (self$in_div) {
-    table <- ticsc(tag = "table", style = self$table_style, content = paste0(thead, tbody, collapse = ""))
-    ticsc(tag = "div", id = self$id, class = self$class, style = self$div_style, content = table)
-  } else {
-    ticsc(tag = "table", id = self$id, class = self$class, style = self$table_style, content = paste0(thead, tbody, collapse = ""))
+    table <- ticsc(tag = "div", id = self$div_id, class = self$div_class, style = self$div_style, content = table)
   }
+
+  # does not return self invisibly  
+  table
 })
 
 md_table_row <- function(row_vals) {

@@ -5,10 +5,10 @@
 \title{Create a new HTable object}
 \usage{
 htable(x, handle_rownames = c("drop", "add_first", "add_last"),
-  rownames_col_name = "RowNames",
-  table_style = "margin-left:auto;margin-right:auto;",
-  thead_style = "", tbody_style = "", tr_styles = rep("", nrow(x) +
-  1), id = "", class = "", in_div = FALSE, div_style = "")
+  rownames_col_name = "RowNames", table_style = "", thead_style = "",
+  tbody_style = "", tr_styles = rep("", nrow(x) + 1), in_div = FALSE,
+  div_style = "", table_id = "", table_class = "", div_id = "",
+  div_class = "")
 }
 \arguments{
 \item{x}{Data frame.}
@@ -31,6 +31,12 @@ applied to the <tbody> tag.}
 \item{tr_styles}{Character vector (of length \code{nrow(x) + 1}). These
 styles are applied to each <tr> tag in the table.}
 
+\item{in_div}{A boolean indicator if the HTable should be wrapped in a <div>
+container.}
+
+\item{div_style}{A character vector (length 1) that is used to style the
+<div> container if \code{in_div = TRUE}.}
+
 \item{id}{A character vector (length 1) that is used as the id attribute for
 either the overall <table> tag (if \code{in_div = FALSE}) or the overall
 <div> tag (if \code{in_div = TRUE}).}
@@ -38,12 +44,6 @@ either the overall <table> tag (if \code{in_div = FALSE}) or the overall
 \item{class}{A character vector (length 1) that is used as the class
 attribute for either the overall <table> tag (if \code{in_div = FALSE}) or
 the overall <div> tag (if \code{in_div = TRUE}).}
-
-\item{in_div}{A boolean indicator if the HTable should be wrapped in a <div>
-container.}
-
-\item{div_style}{A character vector (length 1) that is used to style the
-<div> container if \code{in_div = TRUE}.}
 }
 \value{
 Reference class object of class HTable.
