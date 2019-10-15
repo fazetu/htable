@@ -150,7 +150,7 @@ HTable$set("public", "col_color", function(col = NULL, color = NULL, include_hea
 HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
+  stopifnot(all(sapply(self$data[, col], function(col) is.numeric(col) | is.logical(col))))
   
   for (c in col) {
     if (mult100) x <- self$data[, c] * 100
