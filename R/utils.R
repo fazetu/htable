@@ -77,3 +77,47 @@ pct_width <- function(x) {
   width[f] <- 0
   width
 }
+
+#' Make a single string of HTML a vector with nice spacing
+#'
+#' @param x A single string of HTML
+#' @param indent_char Character to use to indent the HTML tags.
+#' @export
+prettify_html <- function(x, indent_char = "  ") {
+  split_html <- paste0("<", strsplit(x, "<")[[1]])[-1]
+  
+  # find lines that are "incomplete" and move the next line to that incomplete line
+  incomp_i <- which(!grepl(">$", split_html))
+  nexts_i <- incomp_i + 1
+  split_html[incomp_i] <- paste0(split_html[incomp_i], split_html[nexts_i])
+  html <- split_html[-nexts_i]
+  
+  # figure out how many spaces there need to be
+  count_opens <- 0L
+  count_closes <- 0L
+  indents <- integer(length(html))
+  
+  for (i in seq_along(html)) {
+    line <- html[i]
+    has_open <- grepl("<[^/]", line)
+    has_close <- grepl("</", line)
+    
+    if (has_open & has_close) {
+      indents[i] <- count_opens - count_closes
+    } else if (has_open & !has_close) {
+      indents[i] <- count_opens - count_closes
+    } else if (!has_open & has_close) {
+      indents[i] <- count_opens - (count_closes + 1)
+    }
+    
+    count_opens <- count_opens + has_open
+    count_closes <- count_closes + has_close
+  }
+  
+  tabs <- sapply(indents, function(n) {
+    if (n == 0L) return("")
+    paste0(rep(indent_char, times = n), collapse = "")
+  })
+  
+  paste0(tabs, html)
+}

@@ -3,5 +3,6 @@
 export(HTable)
 export(combine_style_specs)
 export(htable)
+export(prettify_html)
 export(style_spec)
 import(R6)
