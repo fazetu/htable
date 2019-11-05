@@ -174,10 +174,13 @@ HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
 HTable$set("public", "col_comma_fmt", function(col = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
   
   for (c in col) {
-    x <- self$data[, c]
+    x <- try_numeric(self$data[, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No comma format applied.")
+      next
+    }
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, trimws(format(x, big.mark = ",")))
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
@@ -196,10 +199,13 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
 HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
   
   for (c in col) {
-    x <- self$data[, c]
+    x <- try_numeric(self$data[, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No dollar format applied.")
+      next
+    }
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, paste0("&dollar;", trimws(format(x, big.mark = ","))))
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
@@ -223,7 +229,6 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color))
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
   pal <- colorRamp(color)
@@ -237,7 +242,11 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
   }
   
   for (c in col) {
-    x <- self$data[-data_exclude_rows, c]
+    x <- try_numeric(self$data[-data_exclude_rows, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No color scale applied.")
+      next
+    }
     rx <- range(x, na.rm = TRUE) # range x
     sx <- (x - rx[1]) / diff(rx) # scaled x
     # undo any data bars styling if this happens after
@@ -266,7 +275,6 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
   if (is.null(exclude_rows)) {
@@ -280,7 +288,11 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   color <- rep(color, nrow(self$data[-data_exclude_rows, ]))
 
   for (c in col) {
-    x <- self$data[-data_exclude_rows, c]
+    x <- try_numeric(self$data[-data_exclude_rows, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No data bar applied.")
+      next
+    }
     width <- pct_width(x)
     color[is.na(x)] <- "inherit"
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
@@ -313,7 +325,6 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color1), length(color1) == 1)
   stopifnot(is.character(color2), length(color2) == 1)
-  stopifnot(all(sapply(self$data[, col], is.numeric)))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
   
   if (is.null(exclude_rows)) {
@@ -328,7 +339,11 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
   color2 <- rep(color2, nrow(self$data[-data_exclude_rows, ]))
   
   for (c in col) {
-    x <- self$data[-data_exclude_rows, c]
+    x <- try_numeric(self$data[-data_exclude_rows, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No data bar applied.")
+      next
+    }
     width <- pct_width(x)
     lg <- vector("character", length(x)) # background linear gradients
     
