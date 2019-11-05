@@ -150,12 +150,14 @@ HTable$set("public", "col_color", function(col = NULL, color = NULL, include_hea
 HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  stopifnot(all(sapply(self$data[, col], function(col) is.numeric(col) | is.logical(col))))
   
   for (c in col) {
-    if (mult100) x <- self$data[, c] * 100
-    else x <- self$data[, c]
-
+    x <- try_numeric(self$data[, c])
+    if (!is.numeric(x)) { # try numeric didn't work
+      warning("Column ", c, " is not numeric. No percent format applied.")
+      next
+    }
+    if (mult100) x <- x * 100
     new_content <- self$contents[-1, c] # -1 to skip header
     new_content <- tag_replace_content(new_content, sprintf("%.2f%%", x))
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
