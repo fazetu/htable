@@ -146,6 +146,12 @@ HTable$set("public", "row_alt_bg_color", function(color1 = NULL, color2 = NULL, 
   stopifnot(is.character(color1), length(color1) == 1)
   stopifnot(is.character(color2), length(color2) == 1)
   
+  if (nrow(self$data) == 1 & !include_header) {
+    # quit early if coloring 1 row only
+    self$row_bg_color(1, color = color1, include_header = FALSE)
+    return(invisible(self))
+  }
+  
   if (include_header) nr <- nrow(self$styles) # use the longer self$styles
   else nr <- nrow(self$data)
   

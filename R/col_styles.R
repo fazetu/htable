@@ -227,7 +227,7 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
 #' @param col Numeric or character vector of which columns to target.
 #' @param exclude_rows Numeric vector of which rows to exclude from calculation
 #'   and coloring.
-HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B", "#FFEB84", "#F8696B"), exclude_rows = NULL, na.rm = TRUE) {
+HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B", "#FFEB84", "#F8696B"), exclude_rows = NULL, na.rm = TRUE, all = FALSE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color))
@@ -243,14 +243,28 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
   
+  if (all) {
+    browser()
+    self$data[col] <- lapply(self$data[col], try_numeric)
+    all_vals <- unlist(self$data[-data_exclude_rows, col])
+    rx <- range(all_vals, na.rm = TRUE)
+  }
+  
+  
   for (c in col) {
     x <- try_numeric(self$data[-data_exclude_rows, c])
     if (!is.numeric(x)) { # try numeric didn't work
       warning("Column ", c, " is not numeric. No color scale applied.")
       next
     }
-    rx <- range(x, na.rm = TRUE) # range x
+    
+    if (!all) {
+      browser()
+      rx <- range(x, na.rm = TRUE) # range x
+    }
+    
     sx <- (x - rx[1]) / diff(rx) # scaled x
+    
     # undo any data bars styling if this happens after
     color_scale_colors <- rep("inherit", length(sx))
     color_scale_colors[!is.na(sx)] <- rgb(pal(sx[!is.na(sx)]), max = 255)
