@@ -3,10 +3,10 @@ NULL
 
 
 #' HTable reference class object
-#' 
+#'
 #' Details on the HTable reference class object. All help pages for the methods
 #' are prefixed with "HTable", like "HTable_<function_name>".
-#' 
+#'
 #' @field data A copy of the original data frame that was used to create the
 #'   HTable. This is used when applying formats or conditional scaling. These
 #'   don't get used when rendering an HTable.
@@ -67,20 +67,24 @@ HTable$set("public", "initialize", function(x,
                                             in_div = FALSE, div_style = "",
                                             table_id = "", table_class = "",
                                             div_id = "", div_class = "") {
+  if (!is(x, "data.frame")) {
+    warning("Coercing x to data.frame", immediate. = TRUE)
+    x <- as.data.frame(x)
+  }
   stopifnot(is.character(table_style), length(table_style) == 1)
   stopifnot(is.character(thead_style), length(thead_style) == 1)
   stopifnot(is.character(tbody_style), length(tbody_style) == 1)
   stopifnot(is.character(tr_styles), length(tr_styles) == (nrow(x) + 1)) # + 1 because all <th>'s go in 1 <tr>
   stopifnot(is.character(div_style), length(div_style) == 1)
-  
+
   stopifnot(is.character(table_id), length(table_id) == 1)
   stopifnot(is.character(table_class), length(table_class) == 1)
   stopifnot(is.character(div_id), length(div_id) == 1)
   stopifnot(is.character(div_class), length(div_class) == 1)
-  
+
   if (!all(attr(x, "row.names") == 1:nrow(x))) { # only care if it has rownames
     handle_rownames <- match.arg(handle_rownames)
-    
+
     if (handle_rownames == "drop") {
       warning("Rownames will be dropped.", call. = FALSE, immediate. = TRUE)
       rownames(x) <- NULL
@@ -102,7 +106,7 @@ HTable$set("public", "initialize", function(x,
     tsc("div", "", colnames(x)),
     do.call("cbind", lapply(x, function(col) tsc("div", "", col)))
   )
-  
+
   self$data <- x
   self$contents <- contents
   self$styles <- styles
@@ -119,7 +123,7 @@ HTable$set("public", "initialize", function(x,
 })
 
 #' Create a new HTable object
-#' 
+#'
 #' Creates a new HTable reference class object from the given data frame.
 #' @param x Data frame.
 #' @param handle_rownames How to handle rownames. Either drop them, add them as
@@ -171,19 +175,19 @@ HTable$set("public", "print", function(...) {
 HTable$set("private", "render_html", function() {
   ths <- ticsc(tag = "th", style = self$styles[1, ], content = self$contents[1, ])
   tds <- lapply(2:nrow(self$contents), function(i) ticsc(tag = "td", style = self$styles[i, ], content = self$contents[i, ]))
-  
+
   tr_ths <- ticsc(tag = "tr", style = self$tr_styles[1], content = paste0(ths, collapse = ""))
   tr_tds <- vapply(seq_along(tds), function(i) ticsc(tag = "tr", style = self$tr_styles[i + 1], content = paste0(tds[[i]], collapse = "")), character(1))
-  
+
   thead <- ticsc(tag = "thead", style = self$thead_style, content = tr_ths)
   tbody <- ticsc(tag = "tbody", style = self$tbody_style, content = paste0(tr_tds, collapse = ""))
-  
+
   table <- ticsc(tag = "table", id = self$table_id, class = self$table_class, style = self$table_style, content = paste0(thead, tbody, collapse = ""))
   if (self$in_div) {
     table <- ticsc(tag = "div", id = self$div_id, class = self$div_class, style = self$div_style, content = table)
   }
 
-  # does not return self invisibly  
+  # does not return self invisibly
   table
 })
 
@@ -199,7 +203,7 @@ HTable$set("private", "render_markdown", function() {
     row <- as.character(self$data[r, ])
     md_table_row(row)
   }, character(1))
-  
+
   paste0(c(header, subheader, rows), collapse = "\n")
 })
 
@@ -210,7 +214,7 @@ HTable$set("private", "render_markdown", function() {
 #' @return A length 1 character vector.
 HTable$set("public", "render", function(type = c("html", "markdown")) {
   type <- match.arg(type)
-  
+
   if (type == "html") {
     private$render_html()
   } else if (type == "markdown") {

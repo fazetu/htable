@@ -43,10 +43,10 @@ HTable$set("public", "col_replace_style", function(col = NULL, style = NULL, inc
   col <- private$col_name_index(col)
   if (is.null(col) | is.null(style)) return(invisible(self))
   stopifnot(is.character(style), length(style) == 1)
-  
+
   if (include_header) rs <- 1:nrow(self$styles)
   else rs <- 2:nrow(self$styles)
-  
+
   self$styles[rs, col] <- style
   invisible(self)
 })
@@ -150,7 +150,7 @@ HTable$set("public", "col_color", function(col = NULL, color = NULL, include_hea
 HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  
+
   for (c in col) {
     x <- try_numeric(self$data[, c])
     if (!is.numeric(x)) { # try numeric didn't work
@@ -163,7 +163,7 @@ HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     self$contents[-1, c] <- new_content # replace
   }
-  
+
   invisible(self)
 })
 
@@ -176,7 +176,7 @@ HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
 HTable$set("public", "col_comma_fmt", function(col = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  
+
   for (c in col) {
     x <- try_numeric(self$data[, c])
     if (!is.numeric(x)) { # try numeric didn't work
@@ -188,7 +188,7 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
     new_content[is.na(x)] <- tag_replace_content(new_content[is.na(x)], "NA")
     self$contents[-1, c] <- new_content
   }
-  
+
   invisible(self)
 })
 
@@ -201,7 +201,7 @@ HTable$set("public", "col_comma_fmt", function(col = NULL) {
 HTable$set("public", "col_dollar_fmt", function(col = NULL) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
-  
+
   for (c in col) {
     x <- try_numeric(self$data[, c])
     if (!is.numeric(x)) { # try numeric didn't work
@@ -214,7 +214,7 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
     # literal $ sign was messing up rendering in some cases
     self$contents[-1, c] <- new_content
   }
-  
+
   invisible(self)
 })
 
@@ -223,18 +223,22 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
 #' @description Change numeric column(s) to have a background color gradient
 #'   based on the range of values in the column.
 #' @usage obj$col_color_scale(col = NULL, color = c("#63BE7B", "#FFEB84",
-#'   "#F8696B"), exclude_rows = NULL, na.rm = TRUE)
+#'   "#F8696B"), exclude_rows = NULL, na.rm = TRUE, all = FALSE)
 #' @param col Numeric or character vector of which columns to target.
+#' @param color Character vector of HTML color names, hex color codes, or rgb
+#'   colors of the form rgb(x, y, z). Used to create a color palette.
 #' @param exclude_rows Numeric vector of which rows to exclude from calculation
 #'   and coloring.
+#' @param all Boolean if the color scaling should be scaled across all of the
+#'   values in the \code{col} columns.
 HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B", "#FFEB84", "#F8696B"), exclude_rows = NULL, na.rm = TRUE, all = FALSE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
-  
+
   pal <- colorRamp(color)
-  
+
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -242,36 +246,31 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
     data_exclude_rows <- exclude_rows
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
-  
+
   if (all) {
-    browser()
-    self$data[col] <- lapply(self$data[col], try_numeric)
-    all_vals <- unlist(self$data[-data_exclude_rows, col])
+    num <- lapply(self$data[-data_exclude_rows, col], try_numeric)
+    all_vals <- unlist(num)
     rx <- range(all_vals, na.rm = TRUE)
   }
-  
-  
+
+
   for (c in col) {
     x <- try_numeric(self$data[-data_exclude_rows, c])
     if (!is.numeric(x)) { # try numeric didn't work
       warning("Column ", c, " is not numeric. No color scale applied.")
       next
     }
-    
-    if (!all) {
-      browser()
-      rx <- range(x, na.rm = TRUE) # range x
-    }
-    
+
+    if (!all) rx <- range(x, na.rm = TRUE) # range x
     sx <- (x - rx[1]) / diff(rx) # scaled x
-    
+
     # undo any data bars styling if this happens after
     color_scale_colors <- rep("inherit", length(sx))
     color_scale_colors[!is.na(sx)] <- rgb(pal(sx[!is.na(sx)]), max = 255)
     color_scale_styles <- sprintf("border-radius:0;padding-right:0;background-color:%s;width:100%%;", color_scale_colors)
     self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], color_scale_styles)
   }
-  
+
   invisible(self)
 })
 
@@ -292,7 +291,7 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
   if (is.null(col)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
-  
+
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -300,7 +299,7 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
     data_exclude_rows <- exclude_rows
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
-  
+
   color <- rep(color, nrow(self$data[-data_exclude_rows, ]))
 
   for (c in col) {
@@ -342,7 +341,7 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
   stopifnot(is.character(color1), length(color1) == 1)
   stopifnot(is.character(color2), length(color2) == 1)
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
-  
+
   if (is.null(exclude_rows)) {
     data_exclude_rows <- -(1:nrow(self$data))
     contents_exclude_rows <- 1
@@ -350,10 +349,10 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
     data_exclude_rows <- exclude_rows
     contents_exclude_rows <- c(1, exclude_rows + 1)
   }
-  
+
   color1 <- rep(color1, nrow(self$data[-data_exclude_rows, ]))
   color2 <- rep(color2, nrow(self$data[-data_exclude_rows, ]))
-  
+
   for (c in col) {
     x <- try_numeric(self$data[-data_exclude_rows, c])
     if (!is.numeric(x)) { # try numeric didn't work
@@ -362,23 +361,23 @@ HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lig
     }
     width <- pct_width(x)
     lg <- vector("character", length(x)) # background linear gradients
-    
+
     # negative-side bars
     neg_dist_center <- 50 - (abs(width) * 0.5)
     # linear-gradient(to right,transparent 0% 10%,lightgreen 10% 50%,transparent 50% 100%);
     lg[width < 0] <- sprintf("linear-gradient(to right,transparent 0%% %.2f%%,%s %.2f%% 50%%,transparent 50%% 100%%);",
                              neg_dist_center[width < 0], color2[width < 0], neg_dist_center[width < 0])
-    
+
     # positive-side bars
     pos_dist_center <- (abs(width) * 0.5) + 50
     # linear-gradient(to right,transparent 0% 50%,lightgreen 50% 90%,transparent 90% 100%);
     lg[width >= 0] <- sprintf("linear-gradient(to right,transparent 0%% 50%%,%s 50%% %.2f%%,transparent %.2f%% 100%%);",
                               color1[width >= 0], pos_dist_center[width >= 0], pos_dist_center[width >= 0])
-    
+
     # white-space:nowrap; prevents a narrow width from forcing the contents to wrap to a new line
     bar_styles <- sprintf("white-space:nowrap;direction:ltr;border-radius:0;padding-right:2px;background:%s;width:100%%", lg)
     self$contents[-contents_exclude_rows, c] <- tag_edit_style(self$contents[-contents_exclude_rows, c], bar_styles)
   }
-  
+
   invisible(self)
 })
