@@ -22,6 +22,7 @@ HTable$set("public", "col_add_style", function(col = NULL, style = NULL, include
   col <- private$col_name_index(col)
   if (is.null(col) | is.null(style)) return(invisible(self))
   stopifnot(is.character(style), length(style) == 1)
+  if (is.null(include_header)) include_header <- FALSE
 
   if (include_header) rs <- 1:nrow(self$styles)
   else rs <- 2:nrow(self$styles)
@@ -43,6 +44,7 @@ HTable$set("public", "col_replace_style", function(col = NULL, style = NULL, inc
   col <- private$col_name_index(col)
   if (is.null(col) | is.null(style)) return(invisible(self))
   stopifnot(is.character(style), length(style) == 1)
+  if (is.null(include_header)) include_header <- FALSE
 
   if (include_header) rs <- 1:nrow(self$styles)
   else rs <- 2:nrow(self$styles)
@@ -150,6 +152,7 @@ HTable$set("public", "col_color", function(col = NULL, color = NULL, include_hea
 HTable$set("public", "col_pct_fmt", function(col = NULL, mult100 = TRUE) {
   col <- private$col_name_index(col)
   if (is.null(col)) return(invisible(self))
+  if (is.null(mult100)) mult100 <- TRUE
 
   for (c in col) {
     x <- try_numeric(self$data[, c])
@@ -233,9 +236,11 @@ HTable$set("public", "col_dollar_fmt", function(col = NULL) {
 #'   values in the \code{col} columns.
 HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B", "#FFEB84", "#F8696B"), exclude_rows = NULL, na.rm = TRUE, all = FALSE) {
   col <- private$col_name_index(col)
-  if (is.null(col)) return(invisible(self))
+  if (is.null(col) | is.null(color)) return(invisible(self))
   stopifnot(is.character(color))
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
+  if (is.null(na.rm)) na.rm <- TRUE
+  if (is.null(all)) all <- FALSE
 
   pal <- colorRamp(color)
 
@@ -261,7 +266,7 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
       next
     }
 
-    if (!all) rx <- range(x, na.rm = TRUE) # range x
+    if (!all) rx <- range(x, na.rm = TRUE)
     sx <- (x - rx[1]) / diff(rx) # scaled x
 
     # undo any data bars styling if this happens after
@@ -288,7 +293,7 @@ HTable$set("public", "col_color_scale", function(col = NULL, color = c("#63BE7B"
 #'   and styling.
 HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", exclude_rows = NULL) {
   col <- private$col_name_index(col)
-  if (is.null(col)) return(invisible(self))
+  if (is.null(col) | is.null(color)) return(invisible(self))
   stopifnot(is.character(color), length(color) == 1)
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))
 
@@ -337,7 +342,7 @@ HTable$set("public", "col_data_bar", function(col = NULL, color = "lightgreen", 
 #'   and styling.
 HTable$set("public", "col_centered_data_bar", function(col = NULL, color1 = "lightgreen", color2 = "pink", exclude_rows = NULL) {
   col <- private$col_name_index(col)
-  if (is.null(col)) return(invisible(self))
+  if (is.null(col) | is.null(color1) | is.null(color2)) return(invisible(self))
   stopifnot(is.character(color1), length(color1) == 1)
   stopifnot(is.character(color2), length(color2) == 1)
   stopifnot(is.numeric(exclude_rows) | is.null(exclude_rows))

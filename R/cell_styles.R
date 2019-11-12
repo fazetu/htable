@@ -19,6 +19,7 @@ HTable$set("public", "cell_add_style", function(row = NULL, col = NULL, style = 
   stopifnot(is.numeric(row))
   stopifnot(is.numeric(col))
   stopifnot(is.character(style), length(style) == 1)
+  if (is.null(include_header)) include_header <- FALSE
   
   if (!include_header) row <- row + 1 # move rows down by 1 if not including the header in rows
   
@@ -43,6 +44,7 @@ HTable$set("public", "cell_replace_style", function(row = NULL, col = NULL, styl
   stopifnot(is.numeric(row))
   stopifnot(is.numeric(col))
   stopifnot(is.character(style), length(style) == 1)
+  if (is.null(include_header)) include_header <- FALSE
   
   if (!include_header) row <- row + 1 # move rows down by 1 if not including the header in rows
   

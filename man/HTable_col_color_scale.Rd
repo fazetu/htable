@@ -5,13 +5,19 @@
 \title{Apply a color scale gradient to columns}
 \usage{
 obj$col_color_scale(col = NULL, color = c("#63BE7B", "#FFEB84",
-  "#F8696B"), exclude_rows = NULL, na.rm = TRUE)
+  "#F8696B"), exclude_rows = NULL, na.rm = TRUE, all = FALSE)
 }
 \arguments{
 \item{col}{Numeric or character vector of which columns to target.}
 
+\item{color}{Character vector of HTML color names, hex color codes, or rgb
+colors of the form rgb(x, y, z). Used to create a color palette.}
+
 \item{exclude_rows}{Numeric vector of which rows to exclude from calculation
 and coloring.}
+
+\item{all}{Boolean if the color scaling should be scaled across all of the
+values in the \code{col} columns.}
 }
 \description{
 Change numeric column(s) to have a background color gradient

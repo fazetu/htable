@@ -31,6 +31,7 @@
 #' @param col_color_scale_col Passed into \code{col_color_scale}'s \code{col} argument. See \code{\link{HTable_col_color_scale}}.
 #' @param col_color_scale_color Passed into \code{col_color_scale}'s \code{color} argument. See \code{\link{HTable_col_color_scale}}.
 #' @param col_color_scale_exclude_rows Passed into \code{col_color_scale}'s \code{exclude_rows} argument. See \code{\link{HTable_col_color_scale}}.
+#' @param col_color_scale_all Passed into \code{col_color_scale}'s \code{all} argument. See \code{\link{HTable_col_color_scale}}.
 #' @param col_data_bar_col Passed into \code{col_data_bar}'s \code{col} argument. See \code{\link{HTable_col_data_bar}}.
 #' @param col_data_bar_color Passed into \code{col_data_bar}'s \code{color} argument. See \code{\link{HTable_col_data_bar}}.
 #' @param col_data_bar_exclude_rows Passed into \code{col_data_bar}'s \code{exclude_rows} argument. See \code{\link{HTable_col_data_bar}}.
@@ -50,6 +51,10 @@
 #' @param row_alt_bg_color_color2 Passed into \code{row_alt_bg_color}'s \code{color2} argument. See \code{\link{HTable_row_alt_bg_color}}.
 #' @param row_alt_color_color1 Passed into \code{row_alt_color}'s \code{color1} argument. See \code{\link{HTable_row_alt_color}}.
 #' @param row_alt_color_color2 Passed into \code{row_alt_color}'s \code{color2} argument. See \code{\link{HTable_row_alt_color}}.
+#' @param row_color_scale_row Passed into \code{row_color_scale}'s \code{row} argument. See \code{\link{HTable_row_color_scale}}.
+#' @param row_color_scale_color Passed into \code{row_color_scale}'s \code{color} argument. See \code{\link{HTable_row_color_scale}}.
+#' @param row_color_scale_exclude_cols Passed into \code{row_color_scale}'s \code{exclude_cols} argument. See \code{\link{HTable_row_color_scale}}.
+#' @param row_color_scale_all Passed into \code{row_color_scale}'s \code{all} argument. See \code{\link{HTable_row_color_scale}}.
 #' @param header_add_style_style Passed into \code{header_add_style}'s \code{style} argument. See \code{\link{HTable_header_add_style}}.
 #' @param header_bold_flag Boolean if \code{header_bold} should be run. See \code{\link{HTable_header_bold}}.
 #' @param header_italic_flag Boolean if \code{header_italic} should be run. See \code{\link{HTable_header_italic}}.
@@ -90,6 +95,7 @@ style_spec <- function(
   col_color_scale_col                = NULL,
   col_color_scale_color              = c("#63BE7B", "#FFEB84", "#F8696B"),
   col_color_scale_exclude_rows       = NULL,
+  col_color_scale_all                = FALSE,
   col_data_bar_col                   = NULL,
   col_data_bar_color                 = "lightgreen",
   col_data_bar_exclude_rows          = NULL,
@@ -109,6 +115,10 @@ style_spec <- function(
   row_alt_bg_color_color2            = NULL,
   row_alt_color_color1               = NULL,
   row_alt_color_color2               = NULL,
+  row_color_scale_row                = NULL,
+  row_color_scale_color              = c("#63BE7B", "#FFEB84", "#F8696B"),
+  row_color_scale_exclude_cols       = NULL,
+  row_color_scale_all                = FALSE,
   header_add_style_style             = NULL,
   header_bold_flag                   = FALSE,
   header_italic_flag                 = FALSE,
@@ -149,6 +159,7 @@ style_spec <- function(
       col_color_scale_col                = col_color_scale_col,
       col_color_scale_color              = col_color_scale_color,
       col_color_scale_exclude_rows       = col_color_scale_exclude_rows,
+      col_color_scale_all                = col_color_scale_all,
       col_data_bar_col                   = col_data_bar_col,
       col_data_bar_color                 = col_data_bar_color,
       col_data_bar_exclude_rows          = col_data_bar_exclude_rows,
@@ -168,6 +179,10 @@ style_spec <- function(
       row_alt_bg_color_color2            = row_alt_bg_color_color2,
       row_alt_color_color1               = row_alt_color_color1,
       row_alt_color_color2               = row_alt_color_color2,
+      row_color_scale_row                = row_color_scale_row,
+      row_color_scale_color              = row_color_scale_color,
+      row_color_scale_exclude_cols       = row_color_scale_exclude_cols,
+      row_color_scale_all                = row_color_scale_all,
       header_add_style_style             = header_add_style_style,
       header_bold_flag                   = header_bold_flag,
       header_italic_flag                 = header_italic_flag,
@@ -204,7 +219,7 @@ HTable$set("private", "apply_style_spec_col", function(style_spec) {
   self$col_pct_fmt(col = style_spec$col_pct_fmt_col, mult100 = style_spec$col_pct_fmt_mult100)
   self$col_comma_fmt(col = style_spec$col_comma_fmt_col)
   self$col_dollar_fmt(col = style_spec$col_dollar_fmt_col)
-  self$col_color_scale(col = style_spec$col_color_scale_col, color = style_spec$col_color_scale_color, exclude_rows = style_spec$col_color_scale_exclude_rows)
+  self$col_color_scale(col = style_spec$col_color_scale_col, color = style_spec$col_color_scale_color, exclude_rows = style_spec$col_color_scale_exclude_rows, all = style_spec$col_color_scale_all)
   self$col_data_bar(col = style_spec$col_data_bar_col, color = style_spec$col_data_bar_color, exclude_rows = style_spec$col_data_bar_exclude_rows)
   self$col_centered_data_bar(col = style_spec$col_centered_data_bar_col, color1 = style_spec$col_centered_data_bar_color1, color2 = style_spec$col_centered_data_bar_color2, exclude_rows = style_spec$col_centered_data_bar_exclude_rows)
   invisible(self)
@@ -218,6 +233,7 @@ HTable$set("private", "apply_style_spec_row", function(style_spec) {
   self$row_color(row = style_spec$row_color_row, color = style_spec$row_color_color, include_header = FALSE)
   self$row_alt_bg_color(color1 = style_spec$row_alt_bg_color_color1, color2 = style_spec$row_alt_bg_color_color2, include_header = FALSE)
   self$row_alt_color(color1 = style_spec$row_alt_color_color1, color2 = style_spec$row_alt_color_color2, include_header = FALSE)
+  self$row_color_scale(row = style_spec$row_color_scale_row, color = style_spec$row_color_scale_color, exclude_cols = style_spec$row_color_scale_exclude_cols, all = style_spec$row_color_scale_all)
   invisible(self)
 })
 

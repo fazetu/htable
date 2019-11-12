@@ -18,9 +18,9 @@ style_spec(borders_line = NULL, borders_width = NULL,
   col_pct_fmt_mult100 = TRUE, col_comma_fmt_col = NULL,
   col_dollar_fmt_col = NULL, col_color_scale_col = NULL,
   col_color_scale_color = c("#63BE7B", "#FFEB84", "#F8696B"),
-  col_color_scale_exclude_rows = NULL, col_data_bar_col = NULL,
-  col_data_bar_color = "lightgreen", col_data_bar_exclude_rows = NULL,
-  col_centered_data_bar_col = NULL,
+  col_color_scale_exclude_rows = NULL, col_color_scale_all = FALSE,
+  col_data_bar_col = NULL, col_data_bar_color = "lightgreen",
+  col_data_bar_exclude_rows = NULL, col_centered_data_bar_col = NULL,
   col_centered_data_bar_color1 = "lightgreen",
   col_centered_data_bar_color2 = "pink",
   col_centered_data_bar_exclude_rows = NULL, row_add_style_row = NULL,
@@ -29,11 +29,14 @@ style_spec(borders_line = NULL, borders_width = NULL,
   row_bg_color_color = NULL, row_color_row = NULL,
   row_color_color = NULL, row_alt_bg_color_color1 = NULL,
   row_alt_bg_color_color2 = NULL, row_alt_color_color1 = NULL,
-  row_alt_color_color2 = NULL, header_add_style_style = NULL,
-  header_bold_flag = FALSE, header_italic_flag = FALSE,
-  header_bg_color_color = NULL, header_color_color = NULL,
-  div_x_scroll_flag = FALSE, div_y_scroll_flag = FALSE,
-  div_max_width_width = NULL, div_max_height_height = NULL)
+  row_alt_color_color2 = NULL, row_color_scale_row = NULL,
+  row_color_scale_color = c("#63BE7B", "#FFEB84", "#F8696B"),
+  row_color_scale_exclude_cols = NULL, row_color_scale_all = FALSE,
+  header_add_style_style = NULL, header_bold_flag = FALSE,
+  header_italic_flag = FALSE, header_bg_color_color = NULL,
+  header_color_color = NULL, div_x_scroll_flag = FALSE,
+  div_y_scroll_flag = FALSE, div_max_width_width = NULL,
+  div_max_height_height = NULL)
 }
 \arguments{
 \item{borders_line}{Passed into \code{borders}'s \code{line} argument. See \code{\link{HTable_borders}}.}
@@ -92,6 +95,8 @@ style_spec(borders_line = NULL, borders_width = NULL,
 
 \item{col_color_scale_exclude_rows}{Passed into \code{col_color_scale}'s \code{exclude_rows} argument. See \code{\link{HTable_col_color_scale}}.}
 
+\item{col_color_scale_all}{Passed into \code{col_color_scale}'s \code{all} argument. See \code{\link{HTable_col_color_scale}}.}
+
 \item{col_data_bar_col}{Passed into \code{col_data_bar}'s \code{col} argument. See \code{\link{HTable_col_data_bar}}.}
 
 \item{col_data_bar_color}{Passed into \code{col_data_bar}'s \code{color} argument. See \code{\link{HTable_col_data_bar}}.}
@@ -129,6 +134,14 @@ style_spec(borders_line = NULL, borders_width = NULL,
 \item{row_alt_color_color1}{Passed into \code{row_alt_color}'s \code{color1} argument. See \code{\link{HTable_row_alt_color}}.}
 
 \item{row_alt_color_color2}{Passed into \code{row_alt_color}'s \code{color2} argument. See \code{\link{HTable_row_alt_color}}.}
+
+\item{row_color_scale_row}{Passed into \code{row_color_scale}'s \code{row} argument. See \code{\link{HTable_row_color_scale}}.}
+
+\item{row_color_scale_color}{Passed into \code{row_color_scale}'s \code{color} argument. See \code{\link{HTable_row_color_scale}}.}
+
+\item{row_color_scale_exclude_cols}{Passed into \code{row_color_scale}'s \code{exclude_cols} argument. See \code{\link{HTable_row_color_scale}}.}
+
+\item{row_color_scale_all}{Passed into \code{row_color_scale}'s \code{all} argument. See \code{\link{HTable_row_color_scale}}.}
 
 \item{header_add_style_style}{Passed into \code{header_add_style}'s \code{style} argument. See \code{\link{HTable_header_add_style}}.}
 
