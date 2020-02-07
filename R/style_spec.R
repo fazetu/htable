@@ -1,3 +1,8 @@
+not_null_bool <- function(bool) {
+  if (is.null(bool)) return(FALSE)
+  else bool
+}
+
 #' Create a style specification
 #' 
 #' Create a reausable style specification. This makes it easier apply the same
@@ -202,8 +207,8 @@ HTable$set("private", "apply_style_spec_general", function(style_spec) {
   self$padding(padding = style_spec$padding_padding)
   self$font_size(size = style_spec$font_size_size)
   self$font_family(font = style_spec$font_family_font)
-  if (style_spec$div_x_scroll_flag) self$div_x_scroll()
-  if (style_spec$div_y_scroll_flag) self$div_y_scroll()
+  if (not_null_bool(style_spec$div_x_scroll_flag)) self$div_x_scroll()
+  if (not_null_bool(style_spec$div_y_scroll_flag)) self$div_y_scroll()
   self$div_max_width(width = style_spec$div_max_width_width)
   self$div_max_height(height = style_spec$div_max_height_height)
   invisible(self)
@@ -238,8 +243,8 @@ HTable$set("private", "apply_style_spec_row", function(style_spec) {
 })
 
 HTable$set("private", "apply_style_spec_header", function(style_spec) {
-  if (style_spec$header_bold_flag) self$header_bold()
-  if (style_spec$header_italic_flag) self$header_italic()
+  if (not_null_bool(style_spec$header_bold_flag)) self$header_bold()
+  if (not_null_bool(style_spec$header_italic_flag)) self$header_italic()
   self$header_add_style(style = style_spec$header_add_style_style)
   self$header_bg_color(color = style_spec$header_bg_color_color)
   self$header_color(color = style_spec$header_color_color)
