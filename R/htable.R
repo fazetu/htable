@@ -207,18 +207,45 @@ HTable$set("private", "render_markdown", function() {
   paste0(c(header, subheader, rows), collapse = "\n")
 })
 
+HTable$set("private", "render_vanilla_html", function() {
+  ths <- ticsc(tag = "th", style = "", content = self$contents[1, ])
+  tds <- lapply(2:nrow(self$contents), function(i) ticsc(tag = "td", style = "", content = self$contents[i, ]))
+  
+  tr_ths <- ticsc(tag = "tr", style = "", content = paste0(ths, collapse = ""))
+  tr_tds <- vapply(seq_along(tds), function(i) ticsc(tag = "tr", style = "", content = paste0(tds[[i]], collapse = "")), character(1))
+  
+  thead <- ticsc(tag = "thead", style = "", content = tr_ths)
+  tbody <- ticsc(tag = "tbody", style = "", content = paste0(tr_tds, collapse = ""))
+  
+  table <- ticsc(tag = "table", id = "", class = "", style = "", content = paste0(thead, tbody, collapse = ""))
+  if (self$in_div) {
+    table <- ticsc(tag = "div", id = "", class = "", style = "", content = table)
+  }
+  
+  # does not return self invisibly
+  table
+})
+
+HTable$set("private", "render_kable", function() {
+  knitr::kable(self$data)
+})
+
 #' @name HTable_render
 #' @title Generate the HTML of the HTable object
 #' @param type Render either an HTML or Markdown table.
 #' @usage obj$render("html")
 #' @return A length 1 character vector.
-HTable$set("public", "render", function(type = c("html", "markdown")) {
+HTable$set("public", "render", function(type = c("html", "markdown", "vanilla_html", "kable")) {
   type <- match.arg(type)
 
   if (type == "html") {
     private$render_html()
   } else if (type == "markdown") {
     private$render_markdown()
+  } else if (type == "vanilla_html") {
+    private$render_vanilla_html()
+  } else if (type == "kable") {
+    private$render_kable()
   }
 })
 
@@ -234,12 +261,14 @@ HTable$set("public", "Rmd", function(type = c("html", "markdown")) {
 
 #' @name HTable_View
 #' @title View the HTable in the RStudio Viewer tab
+#' @param vanilla Should non-styled, vanilla HTML be rendered?
 #' @usage obj$View()
-HTable$set("public", "View", function() {
+HTable$set("public", "View", function(vanilla = FALSE) {
+  type <- ifelse(vanilla, "vanilla_html", "html")
   tmp_dir <- tempfile()
   dir.create(tmp_dir)
   tmp_html <- file.path(tmp_dir, "temp.html")
-  writeLines(c("<html><body>", self$render(), "</body></html>"), tmp_html)
+  writeLines(c("<html><body>", self$render(type = type), "</body></html>"), tmp_html)
   rstudioapi::viewer(tmp_html)
 })
 

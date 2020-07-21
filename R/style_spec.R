@@ -1,3 +1,14 @@
+ht <- htable(data.frame(1))
+mthds <- lapply(ht, class)
+fs <- names(mthds)[mthds == "function"]
+bodies <- lapply(fs, function(f) ht[[f]])
+args <- lapply(bodies, formals)
+
+params <- mapply(function(f, arg) {
+  sprintf("%s_%s", f, names(arg))
+}, fs, args)
+
+
 not_null_bool <- function(bool) {
   if (is.null(bool)) return(FALSE)
   else bool

@@ -6,6 +6,9 @@
 \usage{
 obj$View()
 }
+\arguments{
+\item{vanilla}{Should non-styled, vanilla HTML be rendered?}
+}
 \description{
 View the HTable in the RStudio Viewer tab
 }

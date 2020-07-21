@@ -4,11 +4,21 @@
 \alias{htable}
 \title{Create a new HTable object}
 \usage{
-htable(x, handle_rownames = c("drop", "add_first", "add_last"),
-  rownames_col_name = "RowNames", table_style = "", thead_style = "",
-  tbody_style = "", tr_styles = rep("", nrow(x) + 1), in_div = FALSE,
-  div_style = "", table_id = "", table_class = "", div_id = "",
-  div_class = "")
+htable(
+  x,
+  handle_rownames = c("drop", "add_first", "add_last"),
+  rownames_col_name = "RowNames",
+  table_style = "",
+  thead_style = "",
+  tbody_style = "",
+  tr_styles = rep("", nrow(x) + 1),
+  in_div = FALSE,
+  div_style = "",
+  table_id = "",
+  table_class = "",
+  div_id = "",
+  div_class = ""
+)
 }
 \arguments{
 \item{x}{Data frame.}
